@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,15 +14,88 @@
             color: #333;
             line-height: 1.6;
         }
+
         header {
-            background-color: #222;
+            /*background-color: #222;*/
             color: white;
-            padding: 30px 20px;
+
+            /* Replace 'your-image-path.jpg' with your actual image file path */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('images/Header_BKG.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            min-height: 100vh;
+
+
+            /* padding was increased to show more of image*/
+            padding: 80px 20px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
             text-align: center;
+
         }
+
+        nav {
+            width: 100%;
+            position: sticky;
+            /* Keep bar at top */
+            top: 0;
+            z-index: 9999;
+            width: 100%;
+            /* Ensures it stays on top of other content */
+            display: flex;
+            /* Aligns the buttons side-by-side */
+            background-color: rgba(34, 34, 34, 0.95);
+            /* Dark semi-transparent background */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            /* Adds depth as you scroll */
+        }
+
+        nav a {
+            flex: 1;
+            /* Forces each link to take up equal width of the page */
+            text-align: center;
+            padding: 20px 0;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            /* Preparation for hover effect */
+        }
+
+        /* Hover State */
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+            /* Turns nearly white */
+            color: #222;
+            /* Text turns dark for contrast */
+        }
+
+        /* Ensure the title has space since nav is now at the top */
+        header h1 {
+            margin-top: auto;
+            /* Pushes the title to the middle */
+            margin-bottom: 10px;
+            font-size: 3rem;
+        }
+
+        header p {
+            margin-bottom: auto;
+            /* Balances the title in the center */
+            font-size: 1.2rem;
+        }
+
         section {
             padding: 20px;
         }
+
         .images-section {
             display: flex;
             justify-content: center;
@@ -29,22 +103,26 @@
             flex-wrap: wrap;
             background-color: #000;
         }
+
         .images-section img {
             max-width: 150px;
             height: auto;
             border-radius: 10px;
             border: 2px solid #000;
         }
+
         .bio-section {
             background-color: #e9ecef;
             padding: 30px 20px;
             margin-top: 0;
         }
+
         .video-section {
             text-align: center;
             padding: 40px 20px;
             background-color: #fff;
         }
+
         video {
             width: 80%;
             max-width: 600px;
@@ -54,7 +132,13 @@
         }
     </style>
 </head>
+
 <body>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
 
     <header>
         <h1>Drew Novak</h1>
@@ -63,7 +147,8 @@
 
     <section class="bio-section">
         <h2>Professional Summary</h2>
-        <p>Drew Novak is a dedicated student with experience in Aeronotics and Robotics. His passion for Engineering drives him to apply concepts to every part of daily life.</p>
+        <p>Drew Novak is a dedicated student with experience in Aeronotics and Robotics. His passion for Engineering
+            drives him to apply concepts to every part of daily life.</p>
     </section>
 
     <section class="images-section">
@@ -74,12 +159,12 @@
         <h2>Work Experience</h2>
         <p>Over the years, Drew has worked with many people, leading and mentoring teams to success.</p>
     </section>
-	
+
     <section class="images-section">
         <img src="images/gficon.svg" alt="Icon 1">
         <img src="images/icon2.png" alt="Icon 2">
     </section>
-	
+
     <section class="bio-section">
         <h2>Education</h2>
         <p>Drew is pursuing his engineering degree at Purdue University.</p>
@@ -105,6 +190,5 @@
     </section>
 
 </body>
+
 </html>
-
-
