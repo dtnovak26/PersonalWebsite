@@ -1,26 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drew Novak - Resume</title>
+    <title>Drew Novak</title>
+    <link rel="stylesheet" href="shared.css">
     <style>
-        body {
-            font-family: Calibri, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-            line-height: 1.6;
-        }
-
+        /* ---- HERO ---- */
         header {
             color: white;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('images/Header_BKG.jpg');
+            background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+                              url('images/Header_BKG.jpg');
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -29,540 +21,397 @@
             text-align: center;
         }
 
-        header h1 {
-            font-size: 4rem;
-            margin: 0;
-        }
-
-        header p {
-            font-size: 1.5rem;
-            margin: 10px 0 0 0;
-        }
-
-        /* NAVIGATION CONTAINER */
-        nav {
-            position: sticky;
-            top: 0;
-            z-index: 9999;
-            width: 100%;
-            background-color: #777;
-            /* Lighter gray background for the bar */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            margin-top: -63px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            box-sizing: border-box;
-            height: 63px;
-            /* Ensures consistent alignment */
-        }
-
-        /* THE UNIQUE ICON BUTTON (LEFT) */
-        .home-icon-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 45px;
-            height: 45px;
-            background-color: #555;
-            /* Matches right-side buttons */
-            border: 1px solid #ccc;
-            /* Small, light border */
-            border-radius: 10px;
-            /* Curved edges */
-            transition: all 0.3s ease;
-        }
-
-        .home-icon-btn img {
-            width: 25px;
-            height: 25px;
-            filter: invert(1);
-        }
-
-        .home-icon-btn:hover {
-            background-color: #eee;
-        }
-
-        .home-icon-btn:hover img {
-            filter: invert(0);
-        }
-
-        /* RIGHT SIDE BUTTON GROUP */
-        .nav-links {
-            display: flex;
-            width: 50%;
-            gap: 0;
-            /* Ensures buttons touch with no lines between them */
-            height: 100%;
-        }
-
-        /* TEXT BUTTON STYLE (FLUSH) */
-        .nav-btn {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
+        .hero-name {
+            font-size: 5rem;
+            font-weight: 300;
+            margin: 0 0 12px;
+            letter-spacing: 8px;
             text-transform: uppercase;
+            font-family: 'Courier New', monospace;
+        }
+
+        .hero-sub {
             font-size: 0.85rem;
-            background-color: #555;
-            /* Darker gray than the nav bar */
-            border: none;
-            /* No borders or lines */
-            transition: all 0.3s ease;
-        }
-
-        .nav-btn:hover {
-            background-color: #999;
-            /* Subtle light-up effect */
-        }
-
-        /* MOBILE RESPONSIVE */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                width: 100%;
-                position: absolute;
-                top: 63px;
-                left: 0;
-                background-color: #555;
-                height: auto;
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .nav-btn {
-                padding: 20px;
-                border-bottom: 1px solid #666;
-                /* Adds separation only on mobile */
-            }
-        }
-
-        /* OTHER SECTIONS */
-        section {
-            padding: 40px 20px;
-        }
-
-        .images-section {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            background-color: #000;
-        }
-
-        /* THE IMAGE FRAME */
-        .img-container {
-            width: 150px;
-            height: 150px;
-            overflow: hidden;
-            /* Clips the image so it doesn't spill out when zooming */
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* THE IMAGE ITSELF */
-        .img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            /* Ensures the image fills the square nicely */
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            /* Smooth, natural zoom */
-        }
-
-        /* THE HOVER ZOOM EFFECT */
-        .img-container:hover img {
-            transform: scale(1.15);
-            /* Zooms in by 15% */
-        }
-
-        .bio-section {
-            background-color: #e9ecef;
-        }
-
-        /* Ensure the container can hold absolute elements */
-        .img-container {
-            position: relative;
-            /* Crucial for the caption positioning */
-            width: 250px;
-            /* Increased size to make room for text */
-            height: 250px;
-            overflow: hidden;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-
-        /* THE CAPTION BOX */
-        .img-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(85, 85, 85, 0.9);
-            /* Matches your #555 gray but slightly see-through */
-            color: white;
-            padding: 15px;
-            box-sizing: border-box;
-
-            /* Start the caption hidden below the bottom edge */
-            transform: translateY(100%);
-            transition: transform 0.3s ease-out;
-        }
-
-        /* SLIDE UP ON HOVER */
-        .img-container:hover .img-caption {
-            transform: translateY(0);
-        }
-
-        /* TEXT STYLING INSIDE CAPTION */
-        .img-caption h4 {
-            margin: 0 0 5px 0;
-            font-size: 1rem;
+            letter-spacing: 5px;
             text-transform: uppercase;
-        }
-
-        .img-caption p {
+            font-family: 'Courier New', monospace;
+            opacity: 0.55;
             margin: 0;
-            font-size: 0.8rem;
-            line-height: 1.2;
         }
 
-        /* THE SECTION PROVIDING THE BACKGROUND IMAGE */
+        /* Nav sits flush below hero */
+        nav { margin-top: calc(-1 * var(--nav-height)); }
+
+        /* ---- SUMMARY PARALLAX ---- */
         .summary-bg {
             background-image: url('images/SUM_BACK.jpeg');
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
-
-            /* THE PARALLAX MAGIC - makes it fixed while scrolling */
             background-attachment: fixed;
-
-            /* This creates the "surrounded" look by adding space around the box */
             padding: 100px 20px;
-
-            /* Centers the box horizontally and vertically */
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 400px;
-            /* Adjust height as needed */
+            min-height: 380px;
         }
 
-        /* THE BOX CONTAINING THE TEXT */
         .summary-box {
-            background-color: rgba(255, 255, 255, 0.95);
-            /* Semi-transparent white */
-            padding: 40px;
-            border-radius: 15px;
-            /* Curved edges for the box */
-            max-width: 700px;
-            /* Prevents the box from getting too wide */
+            background-color: rgba(15, 15, 15, 0.88);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 44px 52px;
+            border-radius: 4px;
+            max-width: 660px;
             width: 100%;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            /* Makes the box "pop" off the background */
             text-align: center;
-        }
-
-        /* WORK EXPERIENCE SECTION */
-        .work-experience {
-            background-color: #f9f9f9;
-            /* Clean light background */
-            padding: 80px 20px;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        /* THE TIMELINE CONTAINER */
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-            padding-left: 40px;
-            /* Space for the line and dots */
-        }
-
-        /* THE VERTICAL LINE (SPINE) */
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 4px;
-            height: 100%;
-            background: #777;
-            /* Matches your nav bar lighter gray */
-            border-radius: 2px;
-        }
-
-        /* INDIVIDUAL ITEM WRAPPER */
-        .timeline-item {
-            position: relative;
-            margin-bottom: 40px;
-        }
-
-        /* THE DOTS */
-        .timeline-dot {
-            position: absolute;
-            left: -47px;
-            /* Centers the dot on the line */
-            top: 5px;
-            width: 18px;
-            height: 18px;
-            background-color: #555;
-            /* Matches your nav buttons gray */
-            border: 3px solid white;
-            border-radius: 50%;
-            z-index: 1;
-        }
-
-        /* CONTENT BOX */
-        .timeline-content {
-            background: white;
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-
-            /* adding hover affect */
-            transition: all 0.3s ease-in-out;
-            cursor: default;
-        }
-
-        .timeline-content h3 {
-            margin: 0;
-            color: #222;
-            font-size: 1.3rem;
-        }
-
-        .timeline-date {
-            font-weight: bold;
-            color: #777;
-            margin: 5px 0;
-            font-size: 0.9rem;
-        }
-
-        .timeline-company {
-            font-style: italic;
-            color: #444;
-            margin-bottom: 15px;
-        }
-
-        /* THE HOVER EFFECT */
-        .timeline-item:hover .timeline-content {
-            transform: translateY(-5px);
-            /* Lifts the box up */
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-            /* Deepens the shadow */
-            background-color: #ffffff;
-        }
-
-        /* OPTIONAL: Makes the dot glow when the box is hovered */
-        .timeline-item:hover .timeline-dot {
-            background-color: #777;
-            /* Switches to the lighter gray */
-            transform: scale(1.2);
-            /* Makes the dot slightly larger */
-            transition: all 0.3s ease;
-        }
-
-        /* MOBILE ADJUSTMENT */
-        @media (max-width: 768px) {
-            .timeline {
-                padding-left: 30px;
-            }
-
-            .timeline-dot {
-                left: -37px;
-            }
         }
 
         .summary-box h2 {
-            margin-top: 0;
-            color: #333;
+            margin: 0 0 16px;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #666;
+            font-family: 'Courier New', monospace;
+            font-weight: normal;
         }
 
         .summary-box p {
-            margin-bottom: 0;
-            font-size: 1.1rem;
-            color: #444;
+            margin: 0;
+            font-size: 1.05rem;
+            color: #ccc;
+            line-height: 1.8;
         }
 
-        /* MOBILE ADJUSTMENT */
+        /* ---- INTERNSHIP TIMELINE ---- */
+        .timeline-section {
+            padding: 90px 20px;
+            background-color: #1a1a1a;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 740px;
+            margin: 0 auto;
+            padding-left: 44px;
+        }
+
+        /* Spine */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 8px;
+            bottom: 8px;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, #444 10%, #444 90%, transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 38px;
+        }
+
+        .timeline-item:last-child { margin-bottom: 0; }
+
+        /* Diamond dot */
+        .timeline-dot {
+            position: absolute;
+            left: -39px;
+            top: 16px;
+            width: 12px;
+            height: 12px;
+            background-color: var(--tag-internship);
+            transform: rotate(45deg);
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover .timeline-dot {
+            transform: rotate(45deg) scale(1.4);
+        }
+
+        .timeline-content {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 22px 28px;
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover .timeline-content {
+            border-color: rgba(255,255,255,0.15);
+            transform: translateX(4px);
+        }
+
+        .tl-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .tl-title {
+            font-size: 1.05rem;
+            font-weight: bold;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .tl-date {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+        }
+
+        .tl-company {
+            font-size: 0.85rem;
+            color: #666;
+            font-style: italic;
+            margin: 2px 0 12px;
+        }
+
+        .tl-desc {
+            font-size: 0.92rem;
+            color: #aaa;
+            margin: 0;
+        }
+
+        /* ---- 4-TILE PREVIEW ---- */
+        .preview-section {
+            padding: 90px 20px;
+            background-color: #141414;
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Each tile is a square */
+        .preview-tile {
+            position: relative;
+            aspect-ratio: 1;
+            overflow: hidden;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+
+        .preview-tile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            filter: brightness(0.45);
+        }
+
+        /* Fallback when no image — each tag gets its own color */
+        .preview-tile .tile-bg {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-tile:hover img {
+            transform: scale(1.06);
+            filter: brightness(0.6);
+        }
+
+        /* Permanent label overlay (always visible, slides on hover) */
+        .tile-label {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 22px 18px;
+            background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 60%);
+            transition: var(--transition);
+        }
+
+        .tile-label .tile-tag {
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 5px;
+            opacity: 0.8;
+        }
+
+        .tile-label .tile-name {
+            font-size: 0.9rem;
+            color: white;
+            font-weight: bold;
+            line-height: 1.2;
+            letter-spacing: 0.5px;
+        }
+
+        /* Color bar accent at bottom of each tile */
+        .preview-tile::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.35s ease;
+        }
+
+        .preview-tile:hover::after { transform: scaleX(1); }
+
+        .preview-tile.pt-internship   .tile-label .tile-tag { color: #6ea8e0; }
+        .preview-tile.pt-internship::after   { background: var(--tag-internship); }
+
+        .preview-tile.pt-research     .tile-label .tile-tag { color: #6ec4a0; }
+        .preview-tile.pt-research::after     { background: var(--tag-research); }
+
+        .preview-tile.pt-personal     .tile-label .tile-tag { color: #b090e0; }
+        .preview-tile.pt-personal::after     { background: var(--tag-personal); }
+
+        .preview-tile.pt-student-team .tile-label .tile-tag { color: #e0b060; }
+        .preview-tile.pt-student-team::after { background: var(--tag-student-team); }
+
+        /* Fallback bg colors (when no image) */
+        .preview-tile.pt-internship   .tile-bg { background: #1a2a3a; }
+        .preview-tile.pt-research     .tile-bg { background: #1a2e25; }
+        .preview-tile.pt-personal     .tile-bg { background: #251a35; }
+        .preview-tile.pt-student-team .tile-bg { background: #352512; }
+
         @media (max-width: 768px) {
-            .summary-bg {
-                padding: 50px 20px;
-            }
-
-            .summary-box {
-                padding: 25px;
-            }
-        }
-
-        .video-section {
-            text-align: center;
-        }
-
-        video {
-            width: 80%;
-            max-width: 600px;
-            border-radius: 8px;
+            .hero-name { font-size: 2.8rem; letter-spacing: 4px; }
+            .preview-grid { grid-template-columns: repeat(2, 1fr); }
+            .summary-box { padding: 30px 24px; }
+            .summary-bg { background-attachment: scroll; }
         }
     </style>
 </head>
-
 <body>
 
     <header>
-        <h1>Drew Novak</h1>
-        <p>Engineering Portfolio</p>
+        <h1 class="hero-name">Drew Novak</h1>
+        <p class="hero-sub">Engineering Portfolio</p>
     </header>
 
     <nav>
-        <a href="#home" class="home-icon-btn">
-            <img src="images/home-icon.png" alt="Home"> </a>
-
+        <a href="drew.html" class="home-icon-btn" title="Home">
+            <img src="images/home-icon.png" alt="Home">
+        </a>
         <div class="menu-toggle" id="mobile-menu">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </div>
-
         <div class="nav-links" id="nav-links">
-            <a href="#Home" class="nav-btn">Home</a>
-            <a href="#About" class="nav-btn">About</a>
-            <a href="#Work Experience" class="nav-btn">Work Experience</a>
-            <a href="#Projects" class="nav-btn">Projects</a>
-            <a href="#Contact" class="nav-btn">Contact</a>
+            <a href="drew.html"       class="nav-btn active">Home</a>
+            <a href="about.html"      class="nav-btn">About</a>
+            <a href="experience.html" class="nav-btn">Experience</a>
+            <a href="contact.html"    class="nav-btn">Contact</a>
         </div>
     </nav>
 
-    <div class="content-wrapper">
-        <section class="bio-section summary-bg">
-            <div class="summary-box">
-                <h2>Professional Summary</h2>
-                <p>Drew Novak is a dedicated student with experience in Aeronautics and Robotics. His passion for
-                    Engineering drives him to apply concepts to every part of daily life.</p>
-            </div>
-        </section>
-        <!-- REMOVING TEMPORARILY, OUTDATED INFO (just keeping for future reference) DN
-        <section class="images-section">
-            <img src="images/profile.jpg" alt="Profile Picture">
-        </section>
+    <!-- SUMMARY -->
+    <section class="summary-bg">
+        <div class="summary-box">
+            <h2>Professional Summary</h2>
+            <p>Drew Novak is a dedicated student with experience in Aeronautics and Robotics.
+               His passion for Engineering drives him to apply concepts to every part of daily life.</p>
+        </div>
+    </section>
 
-        <section class="bio-section">
-            <h2>Work Experience</h2>
-            <p>Over the years, Drew has worked with many people, leading and mentoring teams to success.</p>
-        </section>
-    -->
+    <!-- INTERNSHIP TIMELINE -->
+    <!-- ================================================================
+         TO ADD A NEW INTERNSHIP: copy one .timeline-item block, paste it
+         at the TOP (most recent first), and fill in title / date / company / desc.
+         Only internship-tagged experiences belong here.
+         ================================================================ -->
+    <section class="timeline-section">
+        <p class="section-label">Internship Experience</p>
 
-        <!--
-        <section class="bio-section">
-            <h2>Education</h2>
-            <p>Drew is pursuing his engineering degree at Purdue University.</p>
-        </section>
-    -->
-        <section class="bio-section work-experience">
-            <h2 class="section-title">Timeline</h2>
+        <div class="timeline">
 
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h3>Semiconductor Manufacturing Intern</h3>
-                        <p class="timeline-date">Purdue STARS (Summer Training and Readiness for Semiconductors? Check
-                            this</p>
-                        <p class="timeline-company">Purdue University</p>
-                        <p>Worked on the MIM Characterization subteam to improve masks for making MIM capacitors in the
-                            Birck Nanotechnology Center cleanroom,
-                            Presenting our findings at the Purdue Summer Research convention. Getting to tour
-                            GlobalFoundries Fab 8 in Malta, NY was huge fun!
-                        </p>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="tl-header">
+                        <h3 class="tl-title">Semiconductor Manufacturing Intern</h3>
+                        <span class="tl-date">Summer 2024</span>
                     </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h3>Undergraduate Research Assistant</h3>
-                        <p class="timeline-date">Janruary 2025 - December 2025</p>
-                        <p class="timeline-company">Specht Lab Purdue</p>
-                        <p>Assisted in using X-Ray spectroscopy to find lead pipes through differing layers of topsoil.
-                            Matlab</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h3>Team Co-Lead</h3>
-                        <p class="timeline-date">2016 - 2024</p>
-                        <p class="timeline-company">FIRST Tech Challenge Robotics Competition</p>
-                        <p>Had so much fun doing FLL and FTC robotics throughout elementary, middle, and high school</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="video-section">
-            <h2>Introduction Video</h2>
-            <video controls>
-                <source src="videos/intro_COMP.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </section>
-
-        <section class="images-section">
-            <div class="img-container">
-                <img src="images/profile.jpg" alt="Project 1">
-                <div class="img-caption">
-                    <h4>Project Title</h4>
-                    <p>EXAMPLE DESCRIPTION - UPDATE</p>
+                    <p class="tl-company">Purdue STARS — Purdue University</p>
+                    <p class="tl-desc">Worked on the MIM Characterization subteam to improve photolithography masks for MIM capacitors at the Birck Nanotechnology Center. Presented findings at the Purdue Summer Research Convention and toured GlobalFoundries Fab 8 in Malta, NY.</p>
                 </div>
             </div>
 
-            <div class="img-container">
-                <img src="images/gficon.svg" alt="Project 2">
-                <div class="img-caption">
-                    <h4>Project Title</h4>
-                    <p>EXAMPLE DESCRIPTION - UPDATE</p>
+            <!-- PASTE ADDITIONAL INTERNSHIP ENTRIES ABOVE THIS LINE -->
+
+        </div>
+    </section>
+
+    <!-- 4-TILE PROJECT PREVIEW -->
+    <!-- ================================================================
+         Each tile represents ONE tag category and links to the experience
+         page pre-filtered to that category. Update href, image src, and
+         tile-name text as you add real entries.
+         ================================================================ -->
+    <section class="preview-section">
+        <p class="section-label">Experience</p>
+
+        <div class="preview-grid">
+
+            <!-- INTERNSHIP TILE -->
+            <a href="experience.html?filter=internship" class="preview-tile pt-internship">
+                <div class="tile-bg"></div>
+                <!-- Uncomment and update when you have an image:
+                <img src="images/YOUR_INTERNSHIP_IMAGE.jpg" alt="Internship"> -->
+                <div class="tile-label">
+                    <span class="tile-tag">Internship</span>
+                    <span class="tile-name">Purdue STARS<br>Semiconductor</span>
                 </div>
-            </div>
-        </section>
+            </a>
 
-    </div>
-    </div>
+            <!-- RESEARCH TILE -->
+            <a href="experience.html?filter=research" class="preview-tile pt-research">
+                <div class="tile-bg"></div>
+                <!-- <img src="images/YOUR_RESEARCH_IMAGE.jpg" alt="Research"> -->
+                <div class="tile-label">
+                    <span class="tile-tag">Research</span>
+                    <span class="tile-name">XRF Lead Pipe<br>Detection</span>
+                </div>
+            </a>
 
-    <script>
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navLinks = document.getElementById('nav-links');
+            <!-- PERSONAL PROJECT TILE -->
+            <a href="experience.html?filter=personal" class="preview-tile pt-personal">
+                <div class="tile-bg"></div>
+                <!-- <img src="images/YOUR_PROJECT_IMAGE.jpg" alt="Personal Project"> -->
+                <div class="tile-label">
+                    <span class="tile-tag">Personal Project</span>
+                    <span class="tile-name">Add Your<br>Project Here</span>
+                </div>
+            </a>
 
-        mobileMenu.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
+            <!-- STUDENT TEAM TILE -->
+            <a href="experience.html?filter=student-team" class="preview-tile pt-student-team">
+                <div class="tile-bg"></div>
+                <!-- <img src="images/YOUR_TEAM_IMAGE.jpg" alt="Student Team"> -->
+                <div class="tile-label">
+                    <span class="tile-tag">Student Team</span>
+                    <span class="tile-name">FTC Robotics<br>Competition</span>
+                </div>
+            </a>
 
-        // Close menu when a link is clicked
-        navLinks.addEventListener('click', () => {
-            if (window.innerWidth <= 1500) {
-                navLinks.classList.remove('active');
-            }
-        });
-    </script>
+        </div>
+    </section>
 
+    <footer>
+        &copy; 2026 Drew Novak &nbsp;&mdash;&nbsp; <a href="contact.html">Contact</a>
+    </footer>
+
+    <script src="nav.js"></script>
 </body>
-
 </html>

@@ -1,0 +1,288 @@
+/* ============================================================
+   shared.css — Common styles across all pages
+   ============================================================ */
+ 
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap');
+ 
+*, *::before, *::after { box-sizing: border-box; }
+ 
+body {
+    font-family: 'Outfit', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1e1f23;
+    color: #ddd;
+    line-height: 1.6;
+}
+ 
+/* --- CSS VARIABLES --- */
+:root {
+    --nav-height:       63px;
+ 
+    /* Backgrounds — Claude-inspired dark gray palette */
+    --bg-base:          #1e1f23;
+    --bg-deep:          #16171b;
+    --bg-surface:       #25262b;
+    --bg-raised:        #2e2f36;
+ 
+    /* Legacy aliases kept for backward compat */
+    --surface:          #25262b;
+    --surface-raised:   #2e2f36;
+ 
+    /* Text */
+    --text-main:        #e8e8e8;
+    --text-muted:       #8a8b92;
+ 
+    /* Borders */
+    --border:           rgba(255,255,255,0.07);
+ 
+    /* Shadows */
+    --shadow-sm:        0 4px 18px rgba(0,0,0,0.28);
+    --shadow-md:        0 10px 32px rgba(0,0,0,0.42);
+    --shadow-lg:        0 18px 50px rgba(0,0,0,0.58);
+ 
+    /* Layout */
+    --radius:           8px;
+    --transition:       all 0.3s ease;
+ 
+    /* Typography */
+    --font-display:     'Outfit', sans-serif;
+    --font-label:       'Barlow Condensed', sans-serif;
+ 
+    /* Tag accent colors */
+    --tag-internship:    #3d6fa3;
+    --tag-research:      #3a8a6a;
+    --tag-personal:      #7a5aaa;
+    --tag-student-team:  #c07a30;
+}
+ 
+/* ============================================================
+   GLOBAL LABEL FONT OVERRIDE
+   Replaces Courier New throughout the site without editing
+   every individual page's <style> block.
+   ============================================================ */
+.section-label,
+.tag-badge,
+.nav-btn,
+footer,
+.page-header h1,
+.page-header p,
+.filter-btn,
+.form-group label,
+.contact-card-text strong,
+.overlay-tag,
+.overlay-arrow,
+.tile-tag,
+.tl-date,
+.hero-dates,
+.hero-org,
+.exp-hero-text .back-link,
+.exp-content h2,
+.submit-btn,
+.form-note,
+.bio-text .bio-sub,
+.edu-card .edu-dates,
+.skill-group h4,
+.highlight-cell .hl-label,
+.contact-form-wrap h3,
+.hero-sub,
+.tl-company,
+.overlay-title,
+.tile-name {
+    font-family: var(--font-label) !important;
+}
+ 
+/* --- SUB-PAGE HEADER BANNER --- */
+.page-header {
+    color: white;
+    background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),
+                      url('images/Header_BKG.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 28vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 50px 20px 40px;
+}
+ 
+.page-header h1 {
+    font-size: 2.8rem;
+    margin: 0 0 10px;
+    letter-spacing: 7px;
+    text-transform: uppercase;
+    font-family: var(--font-label);
+    font-weight: 600;
+}
+ 
+.page-header p {
+    font-size: 0.85rem;
+    margin: 0;
+    opacity: 0.5;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-family: var(--font-label);
+    font-weight: 400;
+}
+ 
+/* --- NAVIGATION --- */
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    width: 100%;
+    background-color: var(--bg-deep);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 2px 24px rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: var(--nav-height);
+}
+ 
+.home-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    transition: var(--transition);
+    text-decoration: none;
+    flex-shrink: 0;
+}
+ 
+.home-icon-btn img  { width: 20px; height: 20px; filter: invert(0.7); }
+.home-icon-btn:hover { background-color: var(--bg-raised); }
+.home-icon-btn:hover img { filter: invert(1); }
+ 
+.nav-links { display: flex; gap: 0; height: 100%; }
+ 
+.nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 2.5px;
+    font-family: var(--font-label);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    transition: var(--transition);
+    white-space: nowrap;
+    height: 100%;
+}
+ 
+.nav-btn:hover  { color: white; border-bottom-color: rgba(255,255,255,0.25); }
+.nav-btn.active { color: white; border-bottom-color: rgba(255,255,255,0.65); }
+ 
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+ 
+.menu-toggle span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--text-muted);
+    border-radius: 2px;
+    transition: var(--transition);
+}
+ 
+/* --- SECTION TITLE --- */
+.section-label {
+    text-align: center;
+    margin: 0 0 48px;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 0.72rem;
+    font-family: var(--font-label);
+    font-weight: 500;
+    color: var(--text-muted);
+}
+ 
+.section-label::before,
+.section-label::after {
+    content: '—';
+    margin: 0 12px;
+    opacity: 0.35;
+}
+ 
+/* --- TAG BADGE --- */
+.tag-badge {
+    display: inline-block;
+    font-size: 0.62rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 4px 12px;
+    border-radius: 2px;
+    color: white;
+    font-family: var(--font-label);
+}
+ 
+.tag-internship   { background-color: var(--tag-internship); }
+.tag-research     { background-color: var(--tag-research); }
+.tag-personal     { background-color: var(--tag-personal); }
+.tag-student-team { background-color: var(--tag-student-team); }
+ 
+/* --- FOOTER --- */
+footer {
+    background-color: var(--bg-deep);
+    color: var(--text-muted);
+    text-align: center;
+    padding: 26px 20px;
+    font-size: 0.72rem;
+    font-family: var(--font-label);
+    letter-spacing: 1.5px;
+    border-top: 1px solid var(--border);
+}
+ 
+footer a { color: #555; text-decoration: none; transition: var(--transition); }
+footer a:hover { color: #ccc; }
+ 
+/* --- MOBILE --- */
+@media (max-width: 768px) {
+    .menu-toggle { display: flex; }
+ 
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: var(--nav-height);
+        left: 0;
+        background-color: var(--bg-deep);
+        border-top: 1px solid var(--border);
+    }
+ 
+    .nav-links.active { display: flex; }
+ 
+    .nav-btn {
+        padding: 18px 24px;
+        border-bottom: 1px solid var(--border);
+        border-left: none;
+        justify-content: flex-start;
+        height: auto;
+    }
+ 
+    .page-header h1 { font-size: 1.9rem; }
+}
+ 

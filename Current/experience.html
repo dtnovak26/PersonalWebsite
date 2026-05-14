@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drew Novak – Experience</title>
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        /* ============================================================
+           HOW TO ADD A NEW EXPERIENCE CARD:
+           1. Copy one <a class="exp-card"> block from the grid below.
+           2. Set data-tag to one of: internship | research | personal | student-team
+           3. Set href to the individual experience page (e.g. exp-semiconductor.html)
+           4. Add your image in the <img> tag (or leave the .no-img placeholder)
+           5. Update the overlay title and tag text.
+           ============================================================ -->
+
+        body { background: #111; }
+
+        /* ---- FILTER BAR ---- */
+        .filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            padding: 36px 20px 48px;
+            flex-wrap: wrap;
+            background: #111;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid #333;
+            color: #666;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 10px 24px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Courier New', monospace;
+            margin: 3px;
+        }
+
+        .filter-btn:hover { border-color: #777; color: #ccc; }
+
+        .filter-btn.active { background: #222; border-color: #888; color: white; }
+
+        /* Color the "active" state per tag */
+        .filter-btn[data-filter="internship"].active   { border-color: var(--tag-internship);   color: #6ea8e0; }
+        .filter-btn[data-filter="research"].active     { border-color: var(--tag-research);     color: #6ec4a0; }
+        .filter-btn[data-filter="personal"].active     { border-color: var(--tag-personal);     color: #b090e0; }
+        .filter-btn[data-filter="student-team"].active { border-color: var(--tag-student-team); color: #e0b060; }
+
+        /* ---- GALLERY GRID ---- */
+        .exp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 3px;
+            padding: 0 3px 3px;
+        }
+
+        /* ---- CARD ---- */
+        .exp-card {
+            position: relative;
+            aspect-ratio: 1;
+            overflow: hidden;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            background: #1a1a1a;
+        }
+
+        .exp-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.6) saturate(0.8);
+            transition: transform 0.5s ease, filter 0.4s ease;
+        }
+
+        /* Placeholder when no image */
+        .no-img {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            opacity: 0.15;
+        }
+
+        /* ---- HOVER OVERLAY ---- */
+        .exp-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 28px 24px;
+            transition: background 0.35s ease;
+        }
+
+        .overlay-inner {
+            transform: translateY(12px);
+            opacity: 0;
+            transition: transform 0.35s ease, opacity 0.35s ease;
+        }
+
+        .overlay-tag {
+            display: block;
+            font-size: 0.6rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 7px;
+        }
+
+        .overlay-title {
+            font-size: 1.05rem;
+            color: white;
+            font-weight: bold;
+            line-height: 1.3;
+            margin: 0 0 10px;
+        }
+
+        .overlay-arrow {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: 'Courier New', monospace;
+            color: rgba(255,255,255,0.45);
+        }
+
+        /* Color accent line at bottom */
+        .exp-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease 0.05s;
+        }
+
+        /* Per-tag colors */
+        .exp-card[data-tag="internship"]   .overlay-tag  { color: #6ea8e0; }
+        .exp-card[data-tag="internship"]::after           { background: var(--tag-internship); }
+
+        .exp-card[data-tag="research"]     .overlay-tag  { color: #6ec4a0; }
+        .exp-card[data-tag="research"]::after             { background: var(--tag-research); }
+
+        .exp-card[data-tag="personal"]     .overlay-tag  { color: #b090e0; }
+        .exp-card[data-tag="personal"]::after             { background: var(--tag-personal); }
+
+        .exp-card[data-tag="student-team"] .overlay-tag  { color: #e0b060; }
+        .exp-card[data-tag="student-team"]::after         { background: var(--tag-student-team); }
+
+        /* ---- HOVER STATE ---- */
+        .exp-card:hover img {
+            transform: scale(1.06);
+            filter: brightness(0.35) saturate(0.6);
+        }
+
+        .exp-card:hover .exp-overlay {
+            background: rgba(0,0,0,0.45);
+        }
+
+        .exp-card:hover .overlay-inner {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .exp-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* ---- HIDDEN (filtered out) ---- */
+        .exp-card.hidden {
+            display: none;
+        }
+
+        /* ---- NO RESULTS MESSAGE ---- */
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 80px 20px;
+            color: #444;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            grid-column: 1 / -1;
+        }
+
+        .no-results.visible { display: block; }
+
+        @media (max-width: 600px) {
+            .exp-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .overlay-title { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-header">
+        <h1>Experience</h1>
+        <p>Internships &nbsp;·&nbsp; Research &nbsp;·&nbsp; Projects &nbsp;·&nbsp; Teams</p>
+    </div>
+
+    <nav>
+        <a href="drew.html" class="home-icon-btn" title="Home">
+            <img src="images/home-icon.png" alt="Home">
+        </a>
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="nav-links" id="nav-links">
+            <a href="drew.html"       class="nav-btn">Home</a>
+            <a href="about.html"      class="nav-btn">About</a>
+            <a href="experience.html" class="nav-btn active">Experience</a>
+            <a href="contact.html"    class="nav-btn">Contact</a>
+        </div>
+    </nav>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="internship">Internship</button>
+        <button class="filter-btn" data-filter="research">Research</button>
+        <button class="filter-btn" data-filter="personal">Personal Project</button>
+        <button class="filter-btn" data-filter="student-team">Student Team</button>
+    </div>
+
+    <!-- GALLERY GRID -->
+    <div class="exp-grid" id="exp-grid">
+
+        <!-- ================================================================
+             ADD NEW CARD — copy this block and fill in your details:
+
+        <a href="exp-YOUR-PAGE.html" class="exp-card" data-tag="internship">
+            <img src="images/YOUR_IMAGE.jpg" alt="Experience name">
+            <!- - OR if no image: <div class="no-img">⚡</div> - ->
+            <div class="exp-overlay">
+                <div class="overlay-inner">
+                    <span class="overlay-tag">Internship</span>
+                    <p class="overlay-title">Your Experience Title</p>
+                    <span class="overlay-arrow">View →</span>
+                </div>
+            </div>
+        </a>
+             ================================================================ -->
+
+        <!-- INTERNSHIP: Semiconductor -->
+        <a href="exp-semiconductor.html" class="exp-card" data-tag="internship">
+            <div class="no-img">⚡</div>
+            <div class="exp-overlay">
+                <div class="overlay-inner">
+                    <span class="overlay-tag">Internship</span>
+                    <p class="overlay-title">Purdue STARS<br>Semiconductor Intern</p>
+                    <span class="overlay-arrow">View →</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- RESEARCH: XRF Lead Detection -->
+        <a href="exp-xrf.html" class="exp-card" data-tag="research">
+            <div class="no-img">🔬</div>
+            <div class="exp-overlay">
+                <div class="overlay-inner">
+                    <span class="overlay-tag">Research</span>
+                    <p class="overlay-title">XRF Lead Pipe<br>Detection</p>
+                    <span class="overlay-arrow">View →</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- STUDENT TEAM: FTC Robotics -->
+        <a href="exp-ftc.html" class="exp-card" data-tag="student-team">
+            <img src="images/profile.jpg" alt="FTC Robotics">
+            <div class="exp-overlay">
+                <div class="overlay-inner">
+                    <span class="overlay-tag">Student Team</span>
+                    <p class="overlay-title">FIRST Tech Challenge<br>Robotics</p>
+                    <span class="overlay-arrow">View →</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- PERSONAL PROJECT placeholder -->
+        <a href="#" class="exp-card" data-tag="personal">
+            <div class="no-img">🔧</div>
+            <div class="exp-overlay">
+                <div class="overlay-inner">
+                    <span class="overlay-tag">Personal Project</span>
+                    <p class="overlay-title">Your Project<br>Title Here</p>
+                    <span class="overlay-arrow">View →</span>
+                </div>
+            </div>
+        </a>
+
+    </div><!-- end #exp-grid -->
+
+    <footer>
+        &copy; 2026 Drew Novak &nbsp;&mdash;&nbsp; <a href="contact.html">Contact</a>
+    </footer>
+
+    <script src="nav.js"></script>
+    <script>
+        // ---- TAG FILTER ----
+        // Reads ?filter=TAG from the URL (set by home page tiles) and also
+        // handles manual button clicks.
+
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const cards       = document.querySelectorAll('.exp-card');
+
+        function applyFilter(filter) {
+            filterBtns.forEach(b => {
+                b.classList.toggle('active', b.dataset.filter === filter);
+            });
+
+            let visible = 0;
+            cards.forEach(card => {
+                const match = filter === 'all' || card.dataset.tag === filter;
+                card.classList.toggle('hidden', !match);
+                if (match) visible++;
+            });
+        }
+
+        // Check URL param on load (e.g. from home page tiles)
+        const params     = new URLSearchParams(window.location.search);
+        const urlFilter  = params.get('filter') || 'all';
+        applyFilter(urlFilter);
+
+        // Button clicks
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => applyFilter(btn.dataset.filter));
+        });
+    </script>
+</body>
+</html>

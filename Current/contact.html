@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drew Novak – Contact</title>
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        body { background: #111; }
+
+        .contact-wrap {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 70px 32px 96px;
+            display: flex;
+            gap: 44px;
+            flex-wrap: wrap;
+        }
+
+        /* ---- CONTACT CARDS ---- */
+        .contact-info {
+            flex: 1;
+            min-width: 220px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .contact-card {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: var(--radius);
+            padding: 20px 22px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: var(--transition);
+        }
+
+        .contact-card:hover {
+            border-color: #444;
+            transform: translateX(4px);
+        }
+
+        .contact-icon {
+            font-size: 1.4rem;
+            width: 44px;
+            height: 44px;
+            background: #222;
+            border: 1px solid #333;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .contact-card-text strong {
+            display: block;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Courier New', monospace;
+            color: #555;
+            margin-bottom: 3px;
+        }
+
+        .contact-card-text span {
+            font-size: 0.92rem;
+            color: #aaa;
+        }
+
+        /* ---- FORM ---- */
+        .contact-form-wrap {
+            flex: 2;
+            min-width: 280px;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: var(--radius);
+            padding: 36px;
+        }
+
+        .contact-form-wrap h3 {
+            margin: 0 0 28px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-family: 'Courier New', monospace;
+            color: #555;
+            font-weight: normal;
+        }
+
+        .form-group { margin-bottom: 22px; }
+
+        .form-group label {
+            display: block;
+            font-size: 0.65rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Courier New', monospace;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            background: #111;
+            border: 1px solid #2a2a2a;
+            border-radius: 4px;
+            font-family: Calibri, sans-serif;
+            font-size: 0.95rem;
+            color: #ccc;
+            transition: border-color 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder { color: #3a3a3a; }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #555;
+        }
+
+        .form-group textarea {
+            height: 130px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: #333;
+            color: #ccc;
+            border: 1px solid #444;
+            padding: 12px 32px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .submit-btn:hover { background: #444; color: white; border-color: #666; }
+
+        .form-note {
+            font-size: 0.72rem;
+            color: #444;
+            font-family: 'Courier New', monospace;
+            margin-top: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .form-note a { color: #555; }
+        .form-note a:hover { color: #999; }
+
+        @media (max-width: 600px) {
+            .contact-wrap { padding: 40px 20px 64px; }
+            .contact-form-wrap { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-header">
+        <h1>Contact</h1>
+        <p>Let's connect</p>
+    </div>
+
+    <nav>
+        <a href="drew.html" class="home-icon-btn" title="Home">
+            <img src="images/home-icon.png" alt="Home">
+        </a>
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="nav-links" id="nav-links">
+            <a href="drew.html"       class="nav-btn">Home</a>
+            <a href="about.html"      class="nav-btn">About</a>
+            <a href="experience.html" class="nav-btn">Experience</a>
+            <a href="contact.html"    class="nav-btn active">Contact</a>
+        </div>
+    </nav>
+
+    <div class="contact-wrap">
+
+        <!-- UPDATE these links with your real email, LinkedIn, and GitHub -->
+        <div class="contact-info">
+            <a href="mailto:YOUR_EMAIL@purdue.edu" class="contact-card">
+                <div class="contact-icon">✉️</div>
+                <div class="contact-card-text">
+                    <strong>Email</strong>
+                    <span>YOUR_EMAIL@purdue.edu</span>
+                </div>
+            </a>
+
+            <a href="https://linkedin.com/in/YOUR_HANDLE" target="_blank" class="contact-card">
+                <div class="contact-icon">🔗</div>
+                <div class="contact-card-text">
+                    <strong>LinkedIn</strong>
+                    <span>linkedin.com/in/YOUR_HANDLE</span>
+                </div>
+            </a>
+
+            <a href="https://github.com/YOUR_GITHUB" target="_blank" class="contact-card">
+                <div class="contact-icon">💻</div>
+                <div class="contact-card-text">
+                    <strong>GitHub</strong>
+                    <span>github.com/YOUR_GITHUB</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- FORM
+             Sign up at formspree.io, create a form, and swap YOUR_FORM_ID below.
+             Free tier, no backend or server needed. -->
+        <div class="contact-form-wrap">
+            <h3>Send a Message</h3>
+            <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Your name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="What's on your mind?" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Send Message</button>
+                <p class="form-note">Powered by <a href="https://formspree.io" target="_blank">Formspree</a> — free, no backend needed.</p>
+
+            </form>
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2026 Drew Novak &nbsp;&mdash;&nbsp; <a href="contact.html">Contact</a>
+    </footer>
+
+    <script src="nav.js"></script>
+</body>
+</html>
