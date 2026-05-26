@@ -9,7 +9,7 @@
         body { background: #111; }
 
         .contact-wrap {
-            max-width: 900px;
+            max-width: 1500px;
             margin: 0 auto;
             padding: 70px 32px 96px;
             display: flex;
@@ -62,7 +62,7 @@
             font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            font-family: 'Courier New', monospace;
+            font-weight: 700;
             color: #555;
             margin-bottom: 3px;
         }
@@ -70,6 +70,15 @@
         .contact-card-text span {
             font-size: 0.92rem;
             color: #aaa;
+        }
+
+        .contact-icon img {
+            filter: invert(0.75);
+            transition: var(--transition);
+        }
+
+        .contact-card:hover .contact-icon img {
+            filter: invert(1);
         }
 
         /* ---- FORM ---- */
@@ -87,9 +96,8 @@
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 4px;
-            font-family: 'Courier New', monospace;
+            font-weight: 700;
             color: #555;
-            font-weight: normal;
         }
 
         .form-group { margin-bottom: 22px; }
@@ -97,10 +105,9 @@
         .form-group label {
             display: block;
             font-size: 0.65rem;
-            font-weight: bold;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
-            font-family: 'Courier New', monospace;
             color: #555;
             margin-bottom: 8px;
         }
@@ -112,8 +119,9 @@
             background: #111;
             border: 1px solid #2a2a2a;
             border-radius: 4px;
-            font-family: Calibri, sans-serif;
+            font-family: 'Montserrat', sans-serif;
             font-size: 0.95rem;
+            font-weight: 400;
             color: #ccc;
             transition: border-color 0.2s ease;
             box-sizing: border-box;
@@ -138,8 +146,9 @@
             color: #ccc;
             border: 1px solid #444;
             padding: 12px 32px;
-            font-family: 'Courier New', monospace;
+            font-family: 'Montserrat', sans-serif;
             font-size: 0.72rem;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 2px;
             border-radius: 4px;
@@ -152,7 +161,7 @@
         .form-note {
             font-size: 0.72rem;
             color: #444;
-            font-family: 'Courier New', monospace;
+            font-weight: 700;
             margin-top: 14px;
             letter-spacing: 0.5px;
         }
@@ -175,7 +184,7 @@
 
     <nav>
         <a href="drew.html" class="home-icon-btn" title="Home">
-            <img src="images/home-icon.png" alt="Home">
+            <img src="images/logo.jpeg" alt="Home">
         </a>
         <div class="menu-toggle" id="mobile-menu">
             <span></span><span></span><span></span>
@@ -184,35 +193,39 @@
             <a href="drew.html"       class="nav-btn">Home</a>
             <a href="about.html"      class="nav-btn">About</a>
             <a href="experience.html" class="nav-btn">Experience</a>
+            <a href="resume.html"     class="nav-btn">Resume</a>
             <a href="contact.html"    class="nav-btn active">Contact</a>
         </div>
     </nav>
 
     <div class="contact-wrap">
 
-        <!-- UPDATE these links with your real email, LinkedIn, and GitHub -->
         <div class="contact-info">
-            <a href="mailto:YOUR_EMAIL@purdue.edu" class="contact-card">
+            <a href="mailto:novak.drew@gmail.com" class="contact-card">
                 <div class="contact-icon">✉️</div>
                 <div class="contact-card-text">
                     <strong>Email</strong>
-                    <span>YOUR_EMAIL@purdue.edu</span>
+                    <span>novak.drew@gmail.com</span>
                 </div>
             </a>
 
-            <a href="https://linkedin.com/in/YOUR_HANDLE" target="_blank" class="contact-card">
-                <div class="contact-icon">🔗</div>
+            <a href="https://linkedin.com/in/dnovak62" target="_blank" class="contact-card">
+                <div class="contact-icon">
+                    <img src="images/linkedin_icon.png" alt="LinkedIn" style="width:24px;height:24px;object-fit:contain;">
+                </div>
                 <div class="contact-card-text">
                     <strong>LinkedIn</strong>
-                    <span>linkedin.com/in/YOUR_HANDLE</span>
+                    <span>linkedin.com/in/dnovak62</span>
                 </div>
             </a>
 
-            <a href="https://github.com/YOUR_GITHUB" target="_blank" class="contact-card">
-                <div class="contact-icon">💻</div>
+            <a href="https://github.com/dtnovak62" target="_blank" class="contact-card">
+                <div class="contact-icon">
+                    <img src="images/github_icon.png" alt="GitHub" style="width:24px;height:24px;object-fit:contain;">
+                </div>
                 <div class="contact-card-text">
                     <strong>GitHub</strong>
-                    <span>github.com/YOUR_GITHUB</span>
+                    <span>github.com/dtnovak62</span>
                 </div>
             </a>
         </div>
@@ -222,7 +235,9 @@
              Free tier, no backend or server needed. -->
         <div class="contact-form-wrap">
             <h3>Send a Message</h3>
-            <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <p>Found a bug? Have suggestions? Wanna chat? Feel free to shoot me an email, LinkedIn message, or fill out the Formspree below, I'll keep on top of messages
+                and respond within 24 hours!</p>
+            <form action="https://formspree.io/f/mpqnjvqy" method="POST">
 
                 <div class="form-group">
                     <label for="name">Name</label>
@@ -231,16 +246,16 @@
 
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                    <input type="email" id="email" name="email" placeholder="yourEmail@email.com" required>
                 </div>
 
                 <div class="form-group">
                     <label for="message">Message</label>
-                    <textarea id="message" name="message" placeholder="What's on your mind?" required></textarea>
+                    <textarea id="message" name="message" placeholder="What's up!" required></textarea>
                 </div>
 
                 <button type="submit" class="submit-btn">Send Message</button>
-                <p class="form-note">Powered by <a href="https://formspree.io" target="_blank">Formspree</a> — free, no backend needed.</p>
+                <p class="form-note">Powered by <a href="https://formspree.io" target="_blank">Formspree</a> - fun little side project to set up!</p>
 
             </form>
         </div>

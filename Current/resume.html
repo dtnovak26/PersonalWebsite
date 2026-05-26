@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drew Novak – Resume</title>
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        body { background: #111; }
+
+        /* ---- DOWNLOAD HERO ---- */
+        .resume-download-bar {
+            background: #1a1a1a;
+            border-bottom: 1px solid #2a2a2a;
+            padding: 28px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .resume-download-bar p {
+            margin: 0;
+            font-size: 0.78rem;
+            color: #666;
+            letter-spacing: 1px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--tag-internship);
+            color: white;
+            text-decoration: none;
+            padding: 12px 28px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .download-btn:hover {
+            background: #2d5a8a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(61,111,163,0.4);
+        }
+
+        .download-btn .btn-icon { font-size: 1rem; }
+
+        /* ---- RESUME WRAP ---- */
+   
+
+        /* ---- LEFT COLUMN ---- */
+        .resume-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .sidebar-block {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: var(--radius);
+            padding: 24px;
+        }
+
+        .sidebar-block h3 {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 700;
+            color: #555;
+            margin: 0 0 16px;
+        }
+
+        /* Contact items */
+        .sidebar-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            text-decoration: none;
+            color: #888;
+            font-size: 0.82rem;
+            transition: var(--transition);
+        }
+
+        .sidebar-contact-item:last-child { margin-bottom: 0; }
+        .sidebar-contact-item:hover { color: #ccc; }
+
+        .sidebar-contact-item .sc-icon {
+            width: 28px;
+            height: 28px;
+            background: #222;
+            border: 1px solid #333;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        /* Skill pills */
+        .skill-pill-group {
+            margin-bottom: 14px;
+        }
+
+        .skill-pill-group:last-child { margin-bottom: 0; }
+
+        .skill-pill-group .spg-label {
+            display: block;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            color: #444;
+            margin-bottom: 8px;
+        }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .pill {
+            background: #222;
+            border: 1px solid #2e2e2e;
+            color: #999;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 2px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ---- RIGHT COLUMN ---- */
+        .resume-main {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .resume-section {
+            position: relative;
+        }
+
+        .resume-section-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 700;
+            color: #555;
+            margin: 0 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .resume-section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #2a2a2a;
+        }
+
+        /* Education card */
+        .edu-resume-card {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid var(--tag-research);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            margin-bottom: 10px;
+        }
+
+.resume-wrap {
+    max-width: 1500px;       /* Matches your site's standard content width block */
+    margin: 0 auto;
+    padding: 56px 32px 96px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+    align-items: start;       /* Prevents the image from touching screen edges on mobile */
+}
+
+.resume-img {
+    width: 100%;            /* Tells the image to scale fluidly to the full width of its wrapper */
+    height: auto;           /* Maintains perfect aspect ratio so text doesn't warp or stretch */
+    display: block;         /* Eliminates gaps underneath inline images */
+    border-radius: var(--radius);  /* Pulls your 8px standard border-radius token */
+    border: 1px solid var(--border); /* Subtle perimeter border line */
+    box-shadow: var(--shadow-md);    /* Adds a sleek professional depth drop shadow */
+}
+        .edu-resume-card:last-child { margin-bottom: 0; }
+
+        .erc-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .erc-degree {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .erc-date {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #555;
+            letter-spacing: 1px;
+        }
+
+        .erc-school {
+            font-size: 0.82rem;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .erc-detail {
+            font-size: 0.88rem;
+            color: #777;
+            line-height: 1.7;
+        }
+
+        /* Experience entries */
+        .exp-resume-entry {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-left: 3px solid var(--tag-internship);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+
+        .exp-resume-entry:last-child { margin-bottom: 0; }
+
+        .exp-resume-entry:hover {
+            border-color: #3a3a3a;
+            border-left-color: #5a8abf;
+        }
+
+        .ere-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 2px;
+        }
+
+        .ere-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .ere-date {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #555;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .ere-org {
+            font-size: 0.82rem;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .ere-bullets {
+            margin: 0;
+            padding-left: 16px;
+        }
+
+        .ere-bullets li {
+            font-size: 0.88rem;
+            color: #888;
+            margin-bottom: 6px;
+            line-height: 1.65;
+        }
+
+        .ere-bullets li:last-child { margin-bottom: 0; }
+
+        /* Tag on entry */
+        .ere-tag {
+            display: inline-block;
+            font-size: 0.58rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 2px 8px;
+            border-radius: 2px;
+            margin-left: 8px;
+            vertical-align: middle;
+            position: relative;
+            top: -1px;
+        }
+
+        /* PDF note */
+        .pdf-note {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 40px;
+        }
+
+        .pdf-note-icon {
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+
+        .pdf-note p {
+            margin: 0;
+            font-size: 0.82rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .pdf-note a {
+            color: #6ea8e0;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .pdf-note a:hover { color: #9ec8f0; }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 768px) {
+            .resume-wrap {
+                grid-template-columns: 1fr;
+                padding: 40px 20px 64px;
+                gap: 28px;
+            }
+
+            .resume-download-bar {
+                padding: 20px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-header">
+        <h1>Resume</h1>
+        <p>Education &nbsp;·&nbsp; Experience &nbsp;·&nbsp; Skills</p>
+    </div>
+
+    <nav>
+        <a href="drew.html" class="home-icon-btn" title="Home">
+            <img src="images/logo.jpeg" alt="Home">
+        </a>
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="nav-links" id="nav-links">
+            <a href="drew.html"       class="nav-btn">Home</a>
+            <a href="about.html"      class="nav-btn">About</a>
+            <a href="experience.html" class="nav-btn">Experience</a>
+            <a href="resume.html"     class="nav-btn active">Resume</a>
+            <a href="contact.html"    class="nav-btn">Contact</a>
+        </div>
+    </nav>
+
+    <div class="resume-wrap">
+        <img src="images/DrewNovakResume_May2026_V2.jpeg" alt="Drew Novak Resume" class="resume-img">
+    </div>
+
+    <!-- DOWNLOAD BAR -->
+    <div style="background:#1a1a1a; border-bottom: 1px solid #2a2a2a;">
+        <div class="resume-download-bar">
+            <p>Full resume available as PDF</p>
+            <a href="files/DrewNovakResume_May2026_V2.pdf" class="download-btn" download>
+                <span class="btn-icon">⬇</span>
+                Download PDF
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Drew Novak &nbsp;&mdash;&nbsp; <a href="contact.html">Contact</a>
+    </footer>
+
+    <script src="nav.js"></script>
+</body>
+</html>

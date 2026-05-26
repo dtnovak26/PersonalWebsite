@@ -16,20 +16,15 @@
 
         /* ---- BIO ---- */
         .bio-block {
-            display: flex;
-            gap: 44px;
-            align-items: flex-start;
-            flex-wrap: wrap;
             margin-bottom: 72px;
         }
 
         .bio-photo {
-            width: 180px;
-            height: 180px;
+            width: 200px;
+            height: 400px;
             border-radius: 4px;
             object-fit: cover;
             filter: grayscale(20%);
-            flex-shrink: 0;
         }
 
         .bio-photo-placeholder {
@@ -43,28 +38,26 @@
             justify-content: center;
             font-size: 4rem;
             opacity: 0.3;
-            flex-shrink: 0;
         }
 
-        .bio-text h2 {
+        .bio-block h2 {
             margin: 0 0 6px;
             font-size: 2rem;
-            font-weight: 300;
-            font-family: 'Courier New', monospace;
+            font-weight: 800;
             color: white;
             letter-spacing: 2px;
         }
 
-        .bio-text .bio-sub {
+        .bio-block .bio-sub {
             font-size: 0.75rem;
             letter-spacing: 3px;
             text-transform: uppercase;
-            font-family: 'Courier New', monospace;
+            font-weight: 700;
             color: #555;
             margin-bottom: 20px;
         }
 
-        .bio-text p {
+        .bio-block p {
             color: #999;
             font-size: 1rem;
             margin: 0 0 16px;
@@ -83,7 +76,7 @@
 
         .edu-card h3 { margin: 0 0 4px; font-size: 1rem; color: var(--text-main); }
         .edu-card .edu-school { font-size: 0.82rem; color: #666; margin-bottom: 2px; }
-        .edu-card .edu-dates  { font-size: 0.72rem; color: #555; font-family: 'Courier New', monospace; letter-spacing: 1px; margin-bottom: 10px; }
+        .edu-card .edu-dates  { font-size: 0.72rem; color: #555; letter-spacing: 1px; margin-bottom: 10px; }
         .edu-card p { margin: 0; font-size: 0.9rem; color: #777; }
 
         /* ---- SKILLS ---- */
@@ -105,7 +98,7 @@
             font-size: 0.68rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            font-family: 'Courier New', monospace;
+            font-weight: 700;
             color: #555;
         }
 
@@ -136,7 +129,7 @@
 
     <nav>
         <a href="drew.html" class="home-icon-btn" title="Home">
-            <img src="images/home-icon.png" alt="Home">
+            <img src="images/logo.jpeg" alt="Home">
         </a>
         <div class="menu-toggle" id="mobile-menu">
             <span></span><span></span><span></span>
@@ -145,6 +138,7 @@
             <a href="drew.html"       class="nav-btn">Home</a>
             <a href="about.html"      class="nav-btn active">About</a>
             <a href="experience.html" class="nav-btn">Experience</a>
+            <a href="resume.html"     class="nav-btn">Resume</a>
             <a href="contact.html"    class="nav-btn">Contact</a>
         </div>
     </nav>
@@ -152,34 +146,69 @@
     <div class="about-wrap">
 
         <!-- BIO -->
-        <div class="bio-block">
-            <div class="bio-photo-placeholder">👤</div>
-            <!-- Swap above for: <img src="images/profile.jpg" alt="Drew Novak" class="bio-photo"> -->
-            <div class="bio-text">
-                <h2>Drew Novak</h2>
-                <p class="bio-sub">Purdue University &mdash; Engineering</p>
-                <p>Engineering student with experience in Aeronautics, Robotics, and Semiconductor fabrication. I love applying engineering fundamentals to real-world problems — from cleanroom device characterization to competition robotics.</p>
-                <!-- Add more paragraphs here -->
-            </div>
-        </div>
-
-        <!-- EDUCATION -->
+        <div class="bio-block clearfix">
+            <h2>Drew Novak</h2>
+            <img src="images/profile.jpg" alt="Drew Novak" class="bio-photo img-float-right img-float-md">
+            <p>As of 2026, I am an engineering undergraduate student with a passion for tech and aerospace. I've found that I love
+                 applying engineering fundamentals to real-world problems - no matter what the problem is.</p>
+            <p>I am currently interested in expanding my knowledge in controls and electro-mechanical integration with the hope to work as an 
+                R&D Design engineer in future internships and when I eventually graduate with my undergraduate/graduate degree. 
+            </p>
+            <p>I have learned a ton through my manufacturing, integration, and R&D experience. I believe I am in a powerful position
+                to leverage these lessons to become a smart, effective, and efficient design engineer and leader </p>
+                    
+                <h3>How did I decide to become an engineer? (the full story)</h3>
+                <p>I never had one "aha" moment like seeing a space shuttle launch that made me say: I want to be an engineer! I originally
+                    wanted to be a train engineer way back in pre-k but I soon realized I wanted to build things. Besides trains, I had a love
+                    for things that move. Trains, planes, and automobiles is a pretty good summary of my childhood with multiple transportation themed
+                    road trips. Some of my earliest memories are playing with matchbox sized planes with my brother in the back seat of our parents
+                    car while watching planes take off from the MSP cell phone lot for hours on end, then going home and watching a few episodes of mythbusters.
+                    At the time I thought it was the coolest thing ever - in hindsight, it was pretty cheap entertainment for us kids!
+                </p>
+                <p>Throughout elementary school I took a lot of motivation from my dad who is a Software Engineer & Architect, and my dream job for a while was 
+                    to follow in his footsteps and become a SWE myself. I started my introduction to software engineering through block coding in 5th grade 
+                    FIRST robotics. Through this I made some life-long friends and started learning HTML, CSS, and a little bit of python on the side to develop
+                    some simple website games and play with Raspberry Pi's.
+                </p>
+                <p>As I progressed in robotics through high school I was happy doing the programming side of things, but really wanted to try out the hardware.
+                    I never fully committed myself to learning the hardware design which is something that I regret. Because of this as I finished up my high school career and
+                    started applying to colleges I wanted to do something that wasn't just software. I wanted hardware design. This led me back to my love of planes
+                    and military aircraft all the way back from pre-k. I learned that aerospace engineering was a great way to combine this yearning for hardware with aircraft - it
+                    was a win-win.
+                </p>
+                <p>When I got to Purdue's First Year Engineering program, I was dead set on becoming an Aerospace Engineer and working at a big 5 defense contractor.
+                    Quite literally in my first day of classes, I realized there we're so many more opportunities. This led me to a dilema between continuing into Purdue's 
+                    Aerospace, Mechanical, or Electrical engineering programs. At the very last second (approximately 4 hours before T2M was due) I switched from Aerospace
+                    to Mechanical. I did this because I didn't want to limit myself to just Aerospace. I've had a love of building computers and software engineering since elementary school
+                    and keeping up with the latest tech-industry trends has always been a passion of mine - and Mechanical Engineers can and do real work there! Thats why I decided
+                    on a MechE major and ECE minor, because I love the integration of physical hardware, electrical components, and software.
+                </p>
+                <p>Throughout my internship experience so far I have gotten to see this combination of MechE and ECE in a tech/semiconuductor as well as Aerospace setting. I 
+                    am truly proud to have this experience so early and have learned a ton from it. I learned that semiconductor fabrication is a bit too low-level for me to
+                    be intruiged, and aerospace has some really cool MechE + ECE integrations but can sometimes be slowed down by older systems. As I look forward to what I want
+                    to do in my future career I want to continue to get my masters, and work in an R&D design/integration role on electro-mechanical components (with a potential interest in controls!).
+                </p>
+        </div><!-- end .bio-block -->
+        
         <div class="content-block">
             <p class="section-label">Education</p>
 
             <!-- ADD NEW EDUCATION: copy .edu-card block -->
             <div class="edu-card">
-                <h3>B.S. in Engineering — UPDATE DEGREE</h3>
+                <h3>B.S. in Mechanical Engineering, Minoring in Electrical & Computer Engineering</h3>
                 <div class="edu-school">Purdue University, West Lafayette, IN</div>
-                <div class="edu-dates">2022 – Present</div>
-                <p>Relevant coursework: UPDATE. GPA, honors, etc.</p>
+                <div class="edu-dates">2024 – 2028</div>
+                <p>At Purdue I have been focused on my engineering undergraduate degree through technical clubs and research. Outside of the classroom
+                    I am involved with the Honors college, Marching band, Student engineering foundation (PSEF), and more. I have enjoyed being challenged
+                    by the coursework and then applying it's nuances to my research and technical organizaitons to bridge the gap between theory, design, and manufacturing.
+                </p>
             </div>
         </div>
 
-        <!-- SKILLS -->
+        <!-- SKILLS I WANT TO MAKE THIS SKILLS SECTION SOMETHING THAT AUTOMATICALLY UPDATES, based on the skills in each of my experiences (pull from the experiences and automatically dkspaly them here)*/
         <div class="content-block">
             <p class="section-label">Skills</p>
-            <!-- ADD / EDIT SKILL GROUPS freely -->
+            
             <div class="skills-grid">
 
                 <div class="skill-group">
@@ -224,7 +253,7 @@
         </div>
 
     </div>
-
+-->
     <footer>
         &copy; 2026 Drew Novak &nbsp;&mdash;&nbsp; <a href="contact.html">Contact</a>
     </footer>
