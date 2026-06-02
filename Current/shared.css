@@ -1,6 +1,7 @@
 /* ============================================================
    shared.css — Common styles across all pages
    ============================================================ */
+/* My universal color is #1EA3E6 decided 5/27/2026 */
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap');
 
@@ -113,13 +114,20 @@ p, li, span,
 input, textarea, button,
 .tl-desc,
 .bio-text p,
+.bio-block p,
 .edu-card p,
 .skill-group ul li,
 .contact-card-text span,
 .exp-overview,
-.exp-section ul li {
+.exp-section ul li,
+.exp-section p,
+.contact-form-wrap p,
+.summary-box p {
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
+    font-size: 1.05rem;
+    color: #ccc;
+    line-height: 1.8;
 }
 
 /* ============================================================
@@ -231,7 +239,7 @@ nav {
     align-items: center;
     justify-content: center;
     padding: 0 20px;
-    color: var(--text-muted);
+    color: #1EA3E6;
     text-decoration: none;
     font-weight: 800;
     text-transform: uppercase;
@@ -274,16 +282,15 @@ nav {
     margin: 0 0 48px;
     text-transform: uppercase;
     letter-spacing: 5px;
-    font-size: 0.72rem;
+    font-size: 1.1rem;
     font-weight: 700;
-    color: var(--text-muted);
+    color: #1EA3E6;
 }
 
 .section-label::before,
 .section-label::after {
-    content: '—';
-    margin: 0 12px;
-    opacity: 0.35;
+    content: '';
+    margin: 0;
 }
 
 /* --- TAG BADGE --- */
@@ -389,6 +396,33 @@ footer a:hover { color: #ccc; }
 }
 
 /* ============================================================
+   BRAND COLOR OVERRIDES — #1EA3E6
+   ============================================================ */
+
+/* Contact page: "Send a Message" heading */
+.contact-form-wrap h3 {
+    color: #1EA3E6 !important;
+    font-size: 1.1rem !important;
+}
+
+/* Contact page: card labels (Email, LinkedIn, GitHub) */
+.contact-card-text strong {
+    color: #1EA3E6 !important;
+    font-size: 0.72rem !important;
+}
+
+/* Change 2: About page "How did I decide to become an engineer?" h3
+   — exactly matches drew.html blue font: 1.1rem, #1EA3E6 */
+.bio-block h3 {
+    color: #1EA3E6;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 28px 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* ============================================================
    FLICKR RESPONSIVE EMBED UTILITY
    ─────────────────────────────────────────────────────────────
    Wrap any Flickr embed snippet in a <div class="flickr-embed">
@@ -448,6 +482,7 @@ footer a:hover { color: #ccc; }
 
 .edu-card p { 
     margin: 0; 
-    font-size: 0.9rem; 
-    color: #777; 
+    font-size: 1.05rem; 
+    color: #ccc;
+    line-height: 1.8;
 }

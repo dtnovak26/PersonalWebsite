@@ -6,15 +6,6 @@
     <title>Drew Novak – Experience</title>
     <link rel="stylesheet" href="shared.css">
     <style>
-        /* ============================================================
-           HOW TO ADD A NEW EXPERIENCE CARD:
-           1. Copy one <a class="exp-card"> block from the grid below.
-           2. Set data-tag to one of: internship | research | personal | student-team
-           3. Set href to the individual experience page (e.g. exp-semiconductor.html)
-           4. Add your image in the <img> tag (or leave the .no-img placeholder)
-           5. Update the overlay title and tag text.
-           ============================================================ -->
-
         body { background: #111; }
 
         /* ---- FILTER BAR ---- */
@@ -42,10 +33,8 @@
         }
 
         .filter-btn:hover { border-color: #777; color: #ccc; }
-
         .filter-btn.active { background: #222; border-color: #888; color: white; }
 
-        /* Color the "active" state per tag */
         .filter-btn[data-filter="internship"].active   { border-color: var(--tag-internship);   color: #6ea8e0; }
         .filter-btn[data-filter="research"].active     { border-color: var(--tag-research);     color: #6ec4a0; }
         .filter-btn[data-filter="personal"].active     { border-color: var(--tag-personal);     color: #b090e0; }
@@ -78,7 +67,6 @@
             transition: transform 0.5s ease, filter 0.4s ease;
         }
 
-        /* Placeholder when no image */
         .no-img {
             width: 100%;
             height: 100%;
@@ -132,74 +120,34 @@
             color: rgba(255,255,255,0.45);
         }
 
-        /* Color accent line at bottom */
         .exp-card::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
+            bottom: 0; left: 0;
+            width: 100%; height: 3px;
             transform: scaleX(0);
             transform-origin: left;
             transition: transform 0.4s ease 0.05s;
         }
 
-        /* Per-tag colors */
         .exp-card[data-tag="internship"]   .overlay-tag  { color: #6ea8e0; }
         .exp-card[data-tag="internship"]::after           { background: var(--tag-internship); }
-
         .exp-card[data-tag="research"]     .overlay-tag  { color: #6ec4a0; }
         .exp-card[data-tag="research"]::after             { background: var(--tag-research); }
-
         .exp-card[data-tag="personal"]     .overlay-tag  { color: #b090e0; }
         .exp-card[data-tag="personal"]::after             { background: var(--tag-personal); }
-
         .exp-card[data-tag="student-team"] .overlay-tag  { color: #e0b060; }
         .exp-card[data-tag="student-team"]::after         { background: var(--tag-student-team); }
 
-        /* ---- HOVER STATE ---- */
-        .exp-card:hover img {
-            transform: scale(1.06);
-            filter: brightness(0.35) saturate(0.6);
-        }
+        .exp-card:hover img { transform: scale(1.06); filter: brightness(0.35) saturate(0.6); }
+        .exp-card:hover .exp-overlay { background: rgba(0,0,0,0.45); }
+        .exp-card:hover .overlay-inner { transform: translateY(0); opacity: 1; }
+        .exp-card:hover::after { transform: scaleX(1); }
 
-        .exp-card:hover .exp-overlay {
-            background: rgba(0,0,0,0.45);
-        }
-
-        .exp-card:hover .overlay-inner {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .exp-card:hover::after {
-            transform: scaleX(1);
-        }
-
-        /* ---- HIDDEN (filtered out) ---- */
-        .exp-card.hidden {
-            display: none;
-        }
-
-        /* ---- NO RESULTS MESSAGE ---- */
-        .no-results {
-            display: none;
-            text-align: center;
-            padding: 80px 20px;
-            color: #444;
-            font-weight: 700;
-            letter-spacing: 2px;
-            font-size: 0.85rem;
-            grid-column: 1 / -1;
-        }
-
-        .no-results.visible { display: block; }
+        .exp-card.hidden { display: none; }
 
         @media (max-width: 600px) {
-            .exp-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .exp-grid { grid-template-columns: repeat(2, 1fr); }
             .overlay-title { font-size: 0.85rem; }
         }
     </style>
@@ -239,35 +187,32 @@
     <!-- GALLERY GRID -->
     <div class="exp-grid" id="exp-grid">
 
-        <!-- ================================================================
-             ADD NEW CARD — copy this block and fill in your details:
-
-        <a href="exp-YOUR-PAGE.html" class="exp-card" data-tag="internship">
-            <img src="images/YOUR_IMAGE.jpg" alt="Experience name">
-        
+        <!-- INTERNSHIP: Boeing -->
+        <a href="exp-boeing.html" class="exp-card" data-tag="internship">
+            <img src="images/boeing_banner_highres.png" alt="Boeing South Carolina">
             <div class="exp-overlay">
                 <div class="overlay-inner">
                     <span class="overlay-tag">Internship</span>
-                    <p class="overlay-title">Your Experience Title</p>
+                    <p class="overlay-title">Boeing South Carolina<br>Innovation Engineering Intern</p>
                     <span class="overlay-arrow">View →</span>
                 </div>
             </div>
         </a>
-             ================================================================ -->
 
+        <!-- INTERNSHIP: Firefly -->
         <a href="exp-firefly.html" class="exp-card" data-tag="internship">
-            <img src="images/FireflyLogo.webp" alt="Experience name">
+            <img src="images/FireflyLogo2.webp" alt="Firefly Aerospace">
             <div class="exp-overlay">
                 <div class="overlay-inner">
                     <span class="overlay-tag">Internship</span>
-                    <p class="overlay-title">Structures Engineering Intern</p>
+                    <p class="overlay-title">Firefly Aerospace<br>Structures Engineering Intern</p>
                     <span class="overlay-arrow">View →</span>
                 </div>
             </div>
         </a>
 
         <!-- INTERNSHIP: Semiconductor -->
-        <a href="exp-semiconductor.html" class="exp-card" data-tag="internship">
+        <a href="exp-stars-semiconductor.html" class="exp-card" data-tag="internship">
             <div class="no-img">⚡</div>
             <div class="exp-overlay">
                 <div class="overlay-inner">
@@ -278,37 +223,85 @@
             </div>
         </a>
 
-        <!-- RESEARCH: XRF Lead Detection -->
-        <a href="exp-xrf.html" class="exp-card" data-tag="research">
-            <div class="no-img">🔬</div>
+        <!-- RESEARCH: Specht Lab -->
+        <a href="exp-specht.html" class="exp-card" data-tag="research">
+            <img src="images/Specht Lab Group.jpeg" alt="Specht Lab Research">
             <div class="exp-overlay">
                 <div class="overlay-inner">
                     <span class="overlay-tag">Research</span>
-                    <p class="overlay-title">XRF Lead Pipe<br>Detection</p>
+                    <p class="overlay-title">Specht Lab<br>Research Assistant</p>
                     <span class="overlay-arrow">View →</span>
                 </div>
             </div>
         </a>
 
-        <!-- STUDENT TEAM: FTC Robotics -->
-        <a href="exp-ftc.html" class="exp-card" data-tag="student-team">
-            <img src="images/profile.jpg" alt="FTC Robotics">
+        <!-- STUDENT TEAM: FIRST Robotics -->
+        <a href="exp-first-robotics.html" class="exp-card" data-tag="student-team">
+            <div class="no-img">🤖</div>
             <div class="exp-overlay">
                 <div class="overlay-inner">
                     <span class="overlay-tag">Student Team</span>
-                    <p class="overlay-title">FIRST Tech Challenge<br>Robotics</p>
+                    <p class="overlay-title">FIRST Robotics<br>Team Lead</p>
                     <span class="overlay-arrow">View →</span>
                 </div>
             </div>
         </a>
 
-        <!-- PERSONAL PROJECT placeholder -->
-        <a href="#" class="exp-card" data-tag="personal">
-            <div class="no-img">🔧</div>
+        <!-- STUDENT TEAM: DODO Drones -->
+        <a href="exp-part-dodo.html" class="exp-card" data-tag="student-team">
+            <img src="images/_DSC7961-2.jpeg" alt="Purdue DODO Drone Club">
+            <div class="exp-overlay">
+                <div class="overlay-inner">
+                    <span class="overlay-tag">Student Team</span>
+                    <p class="overlay-title">Purdue DODO<br>Drone Club</p>
+                    <span class="overlay-arrow">View →</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- STUDENT TEAM: KIWI Autonomy -->
+        <a href="exp-part-kiwi.html" class="exp-card" data-tag="student-team">
+            <img src="images/_DSC7969.jpeg" alt="Purdue KIWI Autonomy">
+            <div class="exp-overlay">
+                <div class="overlay-inner">
+                    <span class="overlay-tag">Student Team</span>
+                    <p class="overlay-title">Purdue KIWI<br>Autonomy Team</p>
+                    <span class="overlay-arrow">View →</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- PERSONAL: Portfolio Website -->
+        <a href="exp-personal-website.html" class="exp-card" data-tag="personal">
+            <div class="no-img">💻</div>
             <div class="exp-overlay">
                 <div class="overlay-inner">
                     <span class="overlay-tag">Personal Project</span>
-                    <p class="overlay-title">Your Project<br>Title Here</p>
+                    <p class="overlay-title">This Portfolio<br>Website</p>
+                    <span class="overlay-arrow">View →</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- PERSONAL: Summer 2026 -->
+        <a href="exp-sum26.html" class="exp-card" data-tag="personal">
+            <img src="images/SUM_BACK.jpeg" alt="Summer 2026">
+            <div class="exp-overlay">
+                <div class="overlay-inner">
+                    <span class="overlay-tag">Personal Project</span>
+                    <p class="overlay-title">Summer 2026<br>Goals & Projects</p>
+                    <span class="overlay-arrow">View →</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- PERSONAL: Custom Quad Builds -->
+        <a href="exp-drones.html" class="exp-card" data-tag="personal">
+            <div class="no-img">🚁</div>
+            <div class="exp-overlay">
+                <div class="overlay-inner">
+                    <span class="overlay-tag">Personal Project</span>
+                    <p class="overlay-title">Custom FPV<br>Quad Builds</p>
                     <span class="overlay-arrow">View →</span>
                 </div>
             </div>
@@ -322,7 +315,6 @@
 
     <script src="nav.js"></script>
     <script>
-        // ---- TAG FILTER ----
         const filterBtns = document.querySelectorAll('.filter-btn');
         const cards       = document.querySelectorAll('.exp-card');
 
@@ -330,17 +322,14 @@
             filterBtns.forEach(b => {
                 b.classList.toggle('active', b.dataset.filter === filter);
             });
-
-            let visible = 0;
             cards.forEach(card => {
                 const match = filter === 'all' || card.dataset.tag === filter;
                 card.classList.toggle('hidden', !match);
-                if (match) visible++;
             });
         }
 
-        const params     = new URLSearchParams(window.location.search);
-        const urlFilter  = params.get('filter') || 'all';
+        const params    = new URLSearchParams(window.location.search);
+        const urlFilter = params.get('filter') || 'all';
         applyFilter(urlFilter);
 
         filterBtns.forEach(btn => {
