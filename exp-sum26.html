@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summer 2026 — Drew Novak</title>
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        /* ============================================================
+           INDIVIDUAL EXPERIENCE PAGE TEMPLATE
+           ─────────────────────────────────────────────────────────────
+           To create a new experience page:
+           1. Copy this entire file, rename it (e.g. exp-your-topic.html)
+           2. Update the <title> tag
+           3. Update the hero image / fallback color in .exp-hero
+           4. Update the tag class (tag-internship / tag-research /
+              tag-personal / tag-student-team) and text
+           5. Fill in the section content
+           6. Add your card on experience.html pointing to this file
+           ============================================================ */
+
+        body { background: #111; }
+
+        /* ---- HERO ---- */
+        .exp-hero {
+            position: relative;
+            height: 55vh;
+            min-height: 320px;
+            overflow: hidden;
+            background: #1a2030;
+        }
+
+        .exp-hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.35);
+        }
+
+        .exp-hero-text {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 36px 48px;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
+        }
+
+        .exp-hero-text h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: white;
+            margin: 0 0 12px;
+            letter-spacing: 1px;
+        }
+
+        .hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .hero-org {
+            font-size: 0.85rem;
+            color: #aaa;
+            font-style: italic;
+        }
+
+        .hero-dates {
+            font-size: 0.72rem;
+            color: #666;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* ---- BACK BUTTON ---- */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            border: 2px solid #1EA3E6;
+            color: #1EA3E6;
+            padding: 10px 22px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            text-decoration: none;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .back-btn::before { content: '← '; }
+
+        .back-btn:hover {
+            background: #1EA3E6;
+            color: white;
+        }
+
+
+        /* Back button sizing in hero-meta row */
+
+        /* ---- CONTENT ---- */
+        .exp-content {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 64px 32px 48px;
+        }
+
+        /* Overview — centered bold statement */
+        .exp-overview {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #e8e8e8;
+            line-height: 1.7;
+            text-align: center;
+            max-width: 680px;
+            margin: 0 auto 56px;
+        }
+
+        /* Section headings */
+        .exp-content h2 {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 700;
+            color: #1EA3E6;
+            margin: 0 0 20px;
+        }
+
+        /* Highlight grid */
+        .highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 2px;
+            margin-bottom: 56px;
+        }
+
+        .highlight-cell {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 22px 20px;
+            text-align: center;
+        }
+
+        .highlight-cell .hl-value {
+            display: block;
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .highlight-cell .hl-label {
+            display: block;
+            font-size: 0.65rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #555;
+            margin-top: 6px;
+        }
+
+        /* Detail sections */
+        .exp-section { margin-bottom: 52px; }
+
+        .exp-section ul {
+            padding-left: 18px;
+            margin: 0;
+        }
+
+        .exp-section ul li {
+            font-size: 1.05rem;
+            color: #ccc;
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .exp-content p {
+            font-size: 1.05rem;
+            color: #ccc;
+            line-height: 1.8;
+            margin: 0 0 18px;
+        }
+
+        /* Image gallery */
+        .exp-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 6px;
+            margin-top: 20px;
+        }
+
+        .exp-gallery img {
+            width: 100%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-radius: 4px;
+            filter: brightness(0.8);
+            transition: var(--transition);
+        }
+
+        .exp-gallery img:hover { filter: brightness(1); transform: scale(1.02); }
+
+        /* Divider */
+        .exp-divider {
+            border: none;
+            border-top: 1px solid #222;
+            margin: 48px 0;
+        }
+
+        /* ---- OTHER EXPERIENCES ---- */
+        .other-exp-section {
+            padding: 72px 20px 48px;
+            background: #141414;
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            column-gap: 12.5%;
+            row-gap: 12.5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 12.5%;
+        }
+
+        .preview-tile {
+            position: relative;
+            aspect-ratio: 1;
+            overflow: hidden;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+
+        .preview-tile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            filter: brightness(0.45);
+        }
+
+        .tile-bg {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            opacity: 0.12;
+        }
+
+        .preview-tile:hover img { transform: scale(1.06); filter: brightness(0.6); }
+
+        .tile-label {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 22px 18px;
+            background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 60%);
+        }
+
+        .tile-label .tile-tag {
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .tile-label .tile-name {
+            font-size: 0.9rem;
+            color: white;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: 0.5px;
+        }
+
+        .preview-tile::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 3px;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.35s ease;
+        }
+
+        .preview-tile:hover::after { transform: scaleX(1); }
+
+        .preview-tile.pt-internship   .tile-label .tile-tag { color: #6ea8e0; }
+        .preview-tile.pt-internship::after   { background: var(--tag-internship); }
+        .preview-tile.pt-internship   .tile-bg { background: #1a2a3a; }
+
+        .preview-tile.pt-research     .tile-label .tile-tag { color: #6ec4a0; }
+        .preview-tile.pt-research::after     { background: var(--tag-research); }
+        .preview-tile.pt-research     .tile-bg { background: #1a2e25; }
+
+        .preview-tile.pt-personal     .tile-label .tile-tag { color: #b090e0; }
+        .preview-tile.pt-personal::after     { background: var(--tag-personal); }
+        .preview-tile.pt-personal     .tile-bg { background: #251a35; }
+
+        .preview-tile.pt-student-team .tile-label .tile-tag { color: #e0b060; }
+        .preview-tile.pt-student-team::after { background: var(--tag-student-team); }
+        .preview-tile.pt-student-team .tile-bg { background: #352512; }
+
+        /* ---- BOTTOM BACK BUTTON ---- */
+        .bottom-back {
+            background: #141414;
+            padding: 0 20px 64px;
+            display: flex;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .exp-hero-text { padding: 24px; }
+            .exp-hero-text h1 { font-size: 1.6rem; }
+            .exp-content { padding: 40px 20px 40px; }
+            .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            column-gap: 12.5%;
+            row-gap: 12.5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 12.5%;
+        }
+            .exp-overview { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO -->
+    <div class="exp-hero" style="background: #201a10;">
+        <img src="images/NEMO.JPG" alt="Summer 2026 — Goals & Personal Projects">
+
+        <div class="exp-hero-text">
+            <h1>Summer 2026 — Goals & Personal Projects</h1>
+            <div class="hero-meta">
+                <a href="experience.html" class="back-btn">All Experience</a>
+                <span class="tag-badge tag-personal">Personal Project</span>
+                <span class="hero-org">Self-directed</span>
+                <span class="hero-dates">Summer 2026</span>
+            </div>
+        </div>
+    </div>
+    <nav style="position: relative; margin-bottom: 0;">
+        <a href="index.html" class="home-icon-btn" title="Home">
+            <img src="images/logo.jpeg" alt="Home">
+        </a>
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="nav-links" id="nav-links">
+            <a href="index.html"       class="nav-btn">Home</a>
+            <a href="about.html"      class="nav-btn">About</a>
+            <a href="experience.html" class="nav-btn active">Experience</a>
+            <a href="resume.html"     class="nav-btn">Resume</a>
+            <a href="contact.html"    class="nav-btn">Contact</a>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="exp-content">
+
+        <p class="exp-overview">
+            My own UAV, a rocket, a website, and a startup. more to come here as it happens.
+        </p>
+
+
+        <h1>Highlights</h1>
+        <div class="highlights">
+            <div class="highlight-cell">
+                <span class="hl-value">Boeing</span>
+                <span class="hl-label">Internship</span>
+            </div>
+            <div class="highlight-cell">
+                <span class="hl-value">9</span>
+                <span class="hl-label">Credits</span>
+            </div>
+            <div class="highlight-cell">
+                <span class="hl-value">1X</span>
+                <span class="hl-label">UAV</span>
+            </div>
+            <div class="highlight-cell">
+                <span class="hl-value">PART</span>
+                <span class="hl-label">President</span>
+            </div>
+        </div>
+
+        <img src="images/PUAV_V1.png" alt="MidBodySection787" style="width: 100%;">
+            <p style="text-align: center; font-style: italic; font-size: 0.78rem; color: #555; margin: -36px 0 56px; letter-spacing: 0.3px;">
+                <br><br>First CAD model of my PUAV for prototyping.
+            </p>
+        <!--
+        <div class="exp-section">
+            <h1>Deep Dive: What I Did</h1>
+            <h2>What This Page Is</h2>
+                <p>Between the Boeing internship, personal projects, and general life — summer 2026 is packed. This page is a running log of
+                    the things I'm working on, learning, or thinking about outside of my main internship role.
+                </p>
+                <h2>Technical Goals</h2>
+                <p>This summer I want to deepen my understanding of controls fundamentals — working through some textbook material on feedback systems
+                    and applying it to small personal projects. I'm also continuing to improve this website and document my Boeing experience as it develops.
+                </p>
+                <h2>Side Projects</h2>
+                <p>Details coming as projects take shape — check back here for updates throughout the summer.
+                </p>
+                <h2>Personal</h2>
+                <p>First time living away from the Midwest for an extended stretch. Excited to explore the Charleston area and find a good
+                    routine outside of work hours.
+                </p>
+        </div>
+    -->
+    </div><!-- end .exp-content -->
+
+    <!-- OTHER EXPERIENCES — populated dynamically by experiences.js -->
+    <section class="other-exp-section">
+        <p class="section-label">Other Experiences</p>
+        <div class="preview-grid" id="related-grid">
+            <!-- Tiles injected by renderRelatedTiles() in experiences.js -->
+        </div>
+    </section>
+
+    <div class="bottom-back">
+        <a href="experience.html" class="back-btn">All Experience</a>
+    </div>
+
+    <footer>
+        &copy; 2026 Drew Novak &nbsp;&mdash;&nbsp; <a href="contact.html">Contact</a>
+    </footer>
+
+    <!-- Load the experience registry first, then render related tiles -->
+    <script src="experiences.js"></script>
+    <script src="nav.js"></script>
+    <script>
+        renderRelatedTiles('#related-grid', 'exp-sum26', 3);
+    </script>
+</body>
+</html>

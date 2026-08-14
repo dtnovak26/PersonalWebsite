@@ -1,0 +1,501 @@
+/* ============================================================
+   shared.css — Common styles across all pages
+   ============================================================ */
+/* My universal color is #1EA3E6 decided 5/27/2026 */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    background-color: #1e1f23;
+    color: #ddd;
+    line-height: 1.6;
+}
+
+/* --- CSS VARIABLES --- */
+:root {
+    --nav-height:       63px;
+
+    /* Backgrounds */
+    --bg-base:          #1e1f23;
+    --bg-deep:          #16171b;
+    --bg-surface:       #25262b;
+    --bg-raised:        #2e2f36;
+
+    /* Legacy aliases kept for backward compat */
+    --surface:          #25262b;
+    --surface-raised:   #2e2f36;
+
+    /* Text */
+    --text-main:        #e8e8e8;
+    --text-muted:       #8a8b92;
+
+    /* Borders */
+    --border:           rgba(255,255,255,0.07);
+
+    /* Shadows */
+    --shadow-sm:        0 4px 18px rgba(0,0,0,0.28);
+    --shadow-md:        0 10px 32px rgba(0,0,0,0.42);
+    --shadow-lg:        0 18px 50px rgba(0,0,0,0.58);
+
+    /* Layout */
+    --radius:           8px;
+    --transition:       all 0.3s ease;
+
+    /* Typography — all Montserrat */
+    --font-display:     'Montserrat', sans-serif;
+    --font-label:       'Montserrat', sans-serif;
+
+    /* Tag accent colors */
+    --tag-internship:    #3d6fa3;
+    --tag-research:      #3a8a6a;
+    --tag-personal:      #7a5aaa;
+    --tag-student-team:  #c07a30;
+}
+
+/* ============================================================
+   FONT WEIGHT TIERS
+   — Titles & Buttons  → Extra Bold (800)
+   — Subheadings       → Bold (700)
+   — Paragraph text    → Regular (400, body default)
+   ============================================================ */
+
+/* --- EXTRA BOLD (800): Titles & Buttons --- */
+h1,
+.hero-name,
+.page-header h1,
+.exp-hero-text h1,
+.bio-text h2,
+.edu-card h3,
+.tl-title,
+.overlay-title,
+.tile-name,
+.nav-btn,
+.submit-btn,
+.filter-btn,
+.highlight-cell .hl-value {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+}
+
+/* --- BOLD (700): Subheadings & Labels --- */
+h2, h3, h4,
+.section-label,
+.page-header p,
+.contact-form-wrap h3,
+.exp-content h2,
+.skill-group h4,
+.overlay-tag,
+.overlay-arrow,
+.tl-date,
+.tl-company,
+.hero-dates,
+.hero-org,
+.hero-sub,
+.tag-badge,
+.highlight-cell .hl-label,
+.contact-card-text strong,
+.form-group label,
+.form-note,
+.exp-hero-text .back-link,
+.edu-card .edu-dates,
+.tile-tag {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+/* --- REGULAR (400): Body & UI text --- */
+p, li, span,
+input, textarea, button,
+.tl-desc,
+.bio-text p,
+.bio-block p,
+.edu-card p,
+.skill-group ul li,
+.contact-card-text span,
+.exp-overview,
+.exp-section ul li,
+.exp-section p,
+.contact-form-wrap p,
+.summary-box p {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 1.05rem;
+    color: #ccc;
+    line-height: 1.8;
+}
+
+/* ============================================================
+   GLOBAL LABEL FONT OVERRIDE
+   Ensures shared label classes always use Montserrat.
+   ============================================================ */
+.section-label,
+.tag-badge,
+.nav-btn,
+footer,
+.page-header h1,
+.page-header p,
+.filter-btn,
+.form-group label,
+.contact-card-text strong,
+.overlay-tag,
+.overlay-arrow,
+.tile-tag,
+.tl-date,
+.hero-dates,
+.hero-org,
+.exp-hero-text .back-link,
+.exp-content h2,
+.submit-btn,
+.form-note,
+.bio-text .bio-sub,
+.edu-card .edu-dates,
+.skill-group h4,
+.highlight-cell .hl-label,
+.contact-form-wrap h3,
+.hero-sub,
+.tl-company,
+.overlay-title,
+.tile-name {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+/* --- SUB-PAGE HEADER BANNER --- */
+.page-header {
+    color: white;
+    background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),
+                      url('images/Header_BKG.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 28vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 50px 20px 40px;
+}
+
+.page-header h1 {
+    font-size: 2.8rem;
+    margin: 0 0 10px;
+    letter-spacing: 7px;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+.page-header p {
+    font-size: 0.85rem;
+    margin: 0;
+    opacity: 0.5;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+/* --- NAVIGATION --- */
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    width: 100%;
+    background-color: var(--bg-deep);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 2px 24px rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: var(--nav-height);
+}
+
+.home-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    border-radius: 6px;
+    overflow: hidden;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.home-icon-btn img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.home-icon-btn:hover img {
+    transform: scale(1.05);
+}
+
+.nav-links { display: flex; gap: 0; height: 100%; }
+
+.nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    color: #1EA3E6;
+    text-decoration: none;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 2.5px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    transition: var(--transition);
+    white-space: nowrap;
+    height: 100%;
+}
+
+.nav-btn:hover  { color: white; border-bottom-color: rgba(255,255,255,0.25); }
+.nav-btn.active { color: white; border-bottom-color: rgba(255,255,255,0.65); }
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--text-muted);
+    border-radius: 2px;
+    transition: var(--transition);
+}
+
+/* --- SECTION TITLE --- */
+.section-label {
+    text-align: center;
+    margin: 0 0 48px;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1EA3E6;
+}
+
+.section-label::before,
+.section-label::after {
+    content: '';
+    margin: 0;
+}
+
+/* --- TAG BADGE --- */
+.tag-badge {
+    display: inline-block;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 4px 12px;
+    border-radius: 2px;
+    color: white;
+}
+
+.tag-internship   { background-color: var(--tag-internship); }
+.tag-research     { background-color: var(--tag-research); }
+.tag-personal     { background-color: var(--tag-personal); }
+.tag-student-team { background-color: var(--tag-student-team); }
+
+/* --- FOOTER --- */
+footer {
+    background-color: var(--bg-deep);
+    color: var(--text-muted);
+    text-align: center;
+    padding: 26px 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    border-top: 1px solid var(--border);
+}
+
+footer a { color: #555; text-decoration: none; transition: var(--transition); }
+footer a:hover { color: #ccc; }
+
+/* --- INLINE IMAGE FLOAT UTILITIES ---
+   Usage: add .img-float-right or .img-float-left directly on an <img>.
+   Add .clearfix to the parent container to collapse floats properly.
+   Pair with .img-float-sm / .img-float-md / .img-float-lg to control size.
+   -------------------------------------------------------------------- */
+.img-float-right {
+    float: right;
+    margin: 4px 0 20px 32px;
+    border-radius: var(--radius);
+    max-width: 45%;
+}
+
+.img-float-left {
+    float: left;
+    margin: 4px 32px 20px 0;
+    border-radius: var(--radius);
+    max-width: 45%;
+}
+
+/* Optional size modifiers */
+.img-float-sm  { width: 120px; }
+.img-float-md  { width: 200px; }
+.img-float-lg  { width: 280px; }
+
+/* Clears float children so the parent wraps them */
+.clearfix::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+@media (max-width: 600px) {
+    .img-float-right,
+    .img-float-left {
+        float: none;
+        display: block;
+        max-width: 100%;
+        width: 100% !important;
+        margin: 0 0 20px 0;
+    }
+}
+
+/* --- MOBILE --- */
+@media (max-width: 768px) {
+    .menu-toggle { display: flex; }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: fixed;
+        top: var(--nav-height);
+        left: 0;
+        right: 0;
+        background-color: var(--bg-deep);
+        opacity: 1;
+        border-top: 1px solid var(--border);
+        box-shadow: var(--shadow-md);
+        z-index: 9999;
+    }
+
+    .nav-links.active { display: flex; }
+
+    .nav-btn {
+        background-color: var(--bg-deep);
+        padding: 18px 24px;
+        border-bottom: 1px solid var(--border);
+        border-left: none;
+        justify-content: flex-start;
+        height: auto;
+    }
+
+    .page-header h1 { font-size: 1.9rem; }
+}
+
+/* ============================================================
+   BRAND COLOR OVERRIDES — #1EA3E6
+   ============================================================ */
+
+/* Contact page: "Send a Message" heading */
+.contact-form-wrap h3 {
+    color: #1EA3E6 !important;
+    font-size: 1.1rem !important;
+}
+
+/* Contact page: card labels (Email, LinkedIn, GitHub) */
+.contact-card-text strong {
+    color: #1EA3E6 !important;
+    font-size: 0.72rem !important;
+}
+
+/* Change 2: About page "How did I decide to become an engineer?" h3
+   — exactly matches index.html blue font: 1.1rem, #1EA3E6 */
+.bio-block h3 {
+    color: #1EA3E6;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 28px 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* ============================================================
+   FLICKR RESPONSIVE EMBED UTILITY
+   ─────────────────────────────────────────────────────────────
+   Wrap any Flickr embed snippet in a <div class="flickr-embed">
+   to force it to automatically size to your text column.
+   ============================================================ */
+.flickr-embed {
+    width: 100%;
+    max-width: 100%;
+    display: block;
+    margin: 32px 0; /* Creates clean spacing above/below the image matching your paragraphs */
+    border-radius: var(--radius); /* Matches your site's rounded corners */
+    overflow: hidden;
+}
+
+/* Forces everything Flickr's script builds to fluidly scale */
+.flickr-embed c-embed,
+.flickr-embed window,
+.flickr-embed span,
+.flickr-embed img,
+.flickr-embed a {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    box-sizing: border-box;
+}
+/* ============================================================
+   EDUCATION CARD (Migrated from about.html for global use)
+   ============================================================ */
+.edu-card {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-left: 3px solid #444;
+    border-radius: var(--radius);
+    padding: 22px 26px;
+    margin-bottom: 14px;
+    text-align: left; /* Ensures text stays left-aligned if placed in a centered section */
+}
+
+.edu-card h3 { 
+    margin: 0 0 4px; 
+    font-size: 1rem; 
+    color: var(--text-main); 
+}
+
+.edu-card .edu-school { 
+    font-size: 0.82rem; 
+    color: #666; 
+    margin-bottom: 2px; 
+}
+
+.edu-card .edu-dates { 
+    font-size: 0.72rem; 
+    color: #555; 
+    letter-spacing: 1px; 
+    margin-bottom: 10px; 
+}
+
+.edu-card p { 
+    margin: 0; 
+    font-size: 1.05rem; 
+    color: #ccc;
+    line-height: 1.8;
+}

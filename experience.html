@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drew Novak – Experience</title>
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        body { background: #111; }
+
+        /* ---- FILTER BAR ---- */
+        .filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            padding: 36px 20px 48px;
+            flex-wrap: wrap;
+            background: #111;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid #333;
+            color: #666;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 10px 24px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 3px;
+        }
+
+        .filter-btn:hover { border-color: #777; color: #ccc; }
+        .filter-btn.active { background: #222; border-color: #888; color: white; }
+
+        .filter-btn[data-filter="internship"].active   { border-color: var(--tag-internship);   color: #6ea8e0; }
+        .filter-btn[data-filter="research"].active     { border-color: var(--tag-research);     color: #6ec4a0; }
+        .filter-btn[data-filter="personal"].active     { border-color: var(--tag-personal);     color: #b090e0; }
+        .filter-btn[data-filter="student-team"].active { border-color: var(--tag-student-team); color: #e0b060; }
+
+        /* ---- GALLERY GRID ---- */
+        .exp-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            column-gap: 12.5%;
+            row-gap: 12.5%;
+            padding: 0 12.5% 10%;
+        }
+
+        /* ---- CARD ---- */
+        .exp-card {
+            position: relative;
+            aspect-ratio: 1;
+            overflow: hidden;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            background: #1a1a1a;
+        }
+
+        .exp-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.6) saturate(0.8);
+            transition: transform 0.5s ease, filter 0.4s ease;
+        }
+
+        .no-img {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            opacity: 0.15;
+        }
+
+        /* ---- HOVER OVERLAY ---- */
+        .exp-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 28px 24px;
+            transition: background 0.35s ease;
+        }
+
+        .overlay-inner {
+            transform: translateY(12px);
+            opacity: 0;
+            transition: transform 0.35s ease, opacity 0.35s ease;
+        }
+
+        .overlay-tag {
+            display: block;
+            font-size: 0.6rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
+
+        .overlay-title {
+            font-size: 1.05rem;
+            color: white;
+            font-weight: 800;
+            line-height: 1.3;
+            margin: 0 0 10px;
+        }
+
+        .overlay-arrow {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: rgba(255,255,255,0.45);
+        }
+
+        .exp-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 3px;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease 0.05s;
+        }
+
+        .exp-card[data-tag="internship"]   .overlay-tag  { color: #6ea8e0; }
+        .exp-card[data-tag="internship"]::after           { background: var(--tag-internship); }
+        .exp-card[data-tag="research"]     .overlay-tag  { color: #6ec4a0; }
+        .exp-card[data-tag="research"]::after             { background: var(--tag-research); }
+        .exp-card[data-tag="personal"]     .overlay-tag  { color: #b090e0; }
+        .exp-card[data-tag="personal"]::after             { background: var(--tag-personal); }
+        .exp-card[data-tag="student-team"] .overlay-tag  { color: #e0b060; }
+        .exp-card[data-tag="student-team"]::after         { background: var(--tag-student-team); }
+
+        .exp-card:hover img { transform: scale(1.06); filter: brightness(0.35) saturate(0.6); }
+        .exp-card:hover .exp-overlay { background: rgba(0,0,0,0.45); }
+        .exp-card:hover .overlay-inner { transform: translateY(0); opacity: 1; }
+        .exp-card:hover::after { transform: scaleX(1); }
+
+        .exp-card.hidden { display: none; }
+
+        @media (max-width: 600px) {
+            .exp-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            column-gap: 12.5%;
+            row-gap: 12.5%;
+            padding: 0 12.5% 3px;
+        }
+            .overlay-title { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-header">
+        <h1>Experience</h1>
+        <p>Internships &nbsp;·&nbsp; Research &nbsp;·&nbsp; Projects &nbsp;·&nbsp; Teams</p>
+    </div>
+
+    <nav>
+        <a href="index.html" class="home-icon-btn" title="Home">
+            <img src="images/logo.jpeg" alt="Home">
+        </a>
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="nav-links" id="nav-links">
+            <a href="index.html"       class="nav-btn">Home</a>
+            <a href="about.html"      class="nav-btn">About</a>
+            <a href="experience.html" class="nav-btn active">Experience</a>
+            <a href="resume.html"     class="nav-btn">Resume</a>
+            <a href="contact.html"    class="nav-btn">Contact</a>
+        </div>
+    </nav>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="internship">Internship</button>
+        <button class="filter-btn" data-filter="research">Research</button>
+        <button class="filter-btn" data-filter="personal">Personal Project</button>
+        <button class="filter-btn" data-filter="student-team">Student Team</button>
+    </div>
+
+    <!-- GALLERY GRID — populated by experiences.js / renderExpGrid() -->
+    <div class="exp-grid" id="exp-grid">
+
+        <!-- Cards injected by renderExpGrid() in experiences.js -->
+
+    </div><!-- end #exp-grid -->
+
+
+
+    <!-- Load the experience registry first, then initialize -->
+    <script src="experiences.js"></script>
+    <script src="nav.js"></script>
+    <script>
+        // Render all cards from the data file
+        renderExpGrid('#exp-grid');
+
+        // ---- TAG FILTER ----
+        // Re-query cards AFTER renderExpGrid has injected them into the DOM.
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        function applyFilter(filter) {
+            filterBtns.forEach(b => {
+                b.classList.toggle('active', b.dataset.filter === filter);
+            });
+            // Re-select cards each time so dynamically added ones are included
+            document.querySelectorAll('.exp-card').forEach(card => {
+                const match = filter === 'all' || card.dataset.tag === filter;
+                card.classList.toggle('hidden', !match);
+            });
+        }
+
+        // Respect ?filter= URL param (set by home-page tiles)
+        const params    = new URLSearchParams(window.location.search);
+        const urlFilter = params.get('filter') || 'all';
+        applyFilter(urlFilter);
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => applyFilter(btn.dataset.filter));
+        });
+    </script>
+        <footer>
+        &copy; 2026 Drew Novak &nbsp;&mdash;&nbsp; <a href="contact.html">Contact</a>
+    </footer>
+</body>
+</html>

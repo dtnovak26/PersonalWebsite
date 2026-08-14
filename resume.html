@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drew Novak – Resume</title>
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        body { background: #111; }
+
+        .resume-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 56px 20px 48px;
+        }
+
+        .resume-img {
+            width: 75%;
+            height: auto;
+            display: block;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+        }
+
+        .resume-download-bar {
+            width: 75%;
+            margin: 32px auto 0;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: var(--radius);
+            padding: 20px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .resume-download-bar p {
+            margin: 0;
+            font-size: 0.78rem;
+            color: #666;
+            letter-spacing: 1px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--tag-internship);
+            color: white;
+            text-decoration: none;
+            padding: 12px 28px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: var(--transition);
+        }
+
+        .download-btn:hover {
+            background: #2d5a8a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(61,111,163,0.4);
+        }
+
+        @media (max-width: 768px) {
+            .resume-img,
+            .resume-download-bar {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-header">
+        <h1>Resume</h1>
+        <p>Education &nbsp;·&nbsp; Experience &nbsp;·&nbsp; Skills</p>
+    </div>
+
+    <nav>
+        <a href="index.html" class="home-icon-btn" title="Home">
+            <img src="images/logo.jpeg" alt="Home">
+        </a>
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="nav-links" id="nav-links">
+            <a href="index.html"       class="nav-btn">Home</a>
+            <a href="about.html"      class="nav-btn">About</a>
+            <a href="experience.html" class="nav-btn">Experience</a>
+            <a href="resume.html"     class="nav-btn active">Resume</a>
+            <a href="contact.html"    class="nav-btn">Contact</a>
+        </div>
+    </nav>
+
+    <div class="resume-wrap">
+        <img src="images/DrewNovakResume_May2026_V2.jpeg" alt="Drew Novak Resume" class="resume-img">
+
+        <div class="resume-download-bar">
+            <p>Full resume available as PDF</p>
+            <a href="files/DrewNovakResume_May2026_V2.pdf" class="download-btn" download>
+                <span>⬇</span>
+                Download PDF
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Drew Novak &nbsp;&mdash;&nbsp; <a href="contact.html">Contact</a>
+    </footer>
+
+    <script src="nav.js"></script>
+</body>
+</html>

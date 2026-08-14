@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Structures Engineering Intern</title>
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        /* ============================================================
+           INDIVIDUAL EXPERIENCE PAGE TEMPLATE
+           ─────────────────────────────────────────────────────────────
+           To create a new experience page:
+           1. Copy this entire file, rename it (e.g. exp-your-topic.html)
+           2. Update the <title> tag
+           3. Update the hero image / fallback color in .exp-hero
+           4. Update the tag class (tag-internship / tag-research /
+              tag-personal / tag-student-team) and text
+           5. Fill in the section content
+           6. Add your card on experience.html pointing to this file
+           ============================================================ */
+
+        body { background: #111; }
+
+        /* ---- HERO ---- */
+        .exp-hero {
+            position: relative;
+            height: 55vh;
+            min-height: 320px;
+            overflow: hidden;
+            background: #1a2030;
+        }
+
+        .exp-hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.35);
+        }
+
+        .exp-hero-text {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 36px 48px;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
+        }
+
+        .exp-hero-text h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: white;
+            margin: 0 0 12px;
+            letter-spacing: 1px;
+        }
+
+        .hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .hero-org {
+            font-size: 0.85rem;
+            color: #aaa;
+            font-style: italic;
+        }
+
+        .hero-dates {
+            font-size: 0.72rem;
+            color: #666;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* ---- BACK BUTTON ---- */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            border: 2px solid #1EA3E6;
+            color: #1EA3E6;
+            padding: 10px 22px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            text-decoration: none;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .back-btn::before { content: '← '; }
+
+        .back-btn:hover {
+            background: #1EA3E6;
+            color: white;
+        }
+
+
+        /* Back button sizing in hero-meta row */
+
+        /* ---- CONTENT ---- */
+        .exp-content {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 64px 32px 48px;
+        }
+
+        /* Overview — centered bold statement */
+        .exp-overview {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #e8e8e8;
+            line-height: 1.7;
+            text-align: center;
+            max-width: 680px;
+            margin: 0 auto 56px;
+        }
+
+        /* Section headings */
+        .exp-content h2 {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 700;
+            color: #1EA3E6;
+            margin: 0 0 20px;
+        }
+
+        /* Highlight grid */
+        .highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 2px;
+            margin-bottom: 56px;
+        }
+
+        .highlight-cell {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 22px 20px;
+            text-align: center;
+        }
+
+        .highlight-cell .hl-value {
+            display: block;
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .highlight-cell .hl-label {
+            display: block;
+            font-size: 0.65rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #555;
+            margin-top: 6px;
+        }
+
+        /* Detail sections */
+        .exp-section { margin-bottom: 52px; }
+
+        .exp-section ul {
+            padding-left: 18px;
+            margin: 0;
+        }
+
+        .exp-section ul li {
+            font-size: 1.05rem;
+            color: #ccc;
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .exp-content p {
+            font-size: 1.05rem;
+            color: #ccc;
+            line-height: 1.8;
+            margin: 0 0 18px;
+        }
+
+        /* Image gallery */
+        .exp-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 6px;
+            margin-top: 20px;
+        }
+
+        .exp-gallery img {
+            width: 100%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-radius: 4px;
+            filter: brightness(0.8);
+            transition: var(--transition);
+        }
+
+        .exp-gallery img:hover { filter: brightness(1); transform: scale(1.02); }
+
+        /* Divider */
+        .exp-divider {
+            border: none;
+            border-top: 1px solid #222;
+            margin: 48px 0;
+        }
+
+        /* ---- OTHER EXPERIENCES ---- */
+        .other-exp-section {
+            padding: 72px 20px 48px;
+            background: #141414;
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            column-gap: 12.5%;
+            row-gap: 12.5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 12.5%;
+        }
+
+        .preview-tile {
+            position: relative;
+            aspect-ratio: 1;
+            overflow: hidden;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+
+        .preview-tile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            filter: brightness(0.45);
+        }
+
+        .tile-bg {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            opacity: 0.12;
+        }
+
+        .preview-tile:hover img { transform: scale(1.06); filter: brightness(0.6); }
+
+        .tile-label {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 22px 18px;
+            background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 60%);
+        }
+
+        .tile-label .tile-tag {
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .tile-label .tile-name {
+            font-size: 0.9rem;
+            color: white;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: 0.5px;
+        }
+
+        .preview-tile::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 3px;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.35s ease;
+        }
+
+        .preview-tile:hover::after { transform: scaleX(1); }
+
+        .preview-tile.pt-internship   .tile-label .tile-tag { color: #6ea8e0; }
+        .preview-tile.pt-internship::after   { background: var(--tag-internship); }
+        .preview-tile.pt-internship   .tile-bg { background: #1a2a3a; }
+
+        .preview-tile.pt-research     .tile-label .tile-tag { color: #6ec4a0; }
+        .preview-tile.pt-research::after     { background: var(--tag-research); }
+        .preview-tile.pt-research     .tile-bg { background: #1a2e25; }
+
+        .preview-tile.pt-personal     .tile-label .tile-tag { color: #b090e0; }
+        .preview-tile.pt-personal::after     { background: var(--tag-personal); }
+        .preview-tile.pt-personal     .tile-bg { background: #251a35; }
+
+        .preview-tile.pt-student-team .tile-label .tile-tag { color: #e0b060; }
+        .preview-tile.pt-student-team::after { background: var(--tag-student-team); }
+        .preview-tile.pt-student-team .tile-bg { background: #352512; }
+
+        /* ---- BOTTOM BACK BUTTON ---- */
+        .bottom-back {
+            background: #141414;
+            padding: 0 20px 64px;
+            display: flex;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .exp-hero-text { padding: 24px; }
+            .exp-hero-text h1 { font-size: 1.6rem; }
+            .exp-content { padding: 40px 20px 40px; }
+            .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            column-gap: 12.5%;
+            row-gap: 12.5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 12.5%;
+        }
+            .exp-overview { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO -->
+    <div class="exp-hero">
+        <img src="images/787_HighRes.jpg" alt="Boeing Logo">
+
+        <div class="exp-hero-text">
+            <h1>Innovation Engineering Intern</h1>
+            <div class="hero-meta">
+                <a href="experience.html" class="back-btn">All Experience</a>
+                <span class="tag-badge tag-internship">Internship</span>
+                <span class="hero-org">Boeing South Carolina - Mid-Body Innovation Cell</span>
+                <span class="hero-dates">May - August 2026</span>
+            </div>
+        </div>
+    </div>
+    <nav style="position: relative; margin-bottom: 0;">
+        <a href="index.html" class="home-icon-btn" title="Home">
+            <img src="images/logo.jpeg" alt="Home">
+        </a>
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="nav-links" id="nav-links">
+            <a href="index.html"       class="nav-btn">Home</a>
+            <a href="about.html"      class="nav-btn">About</a>
+            <a href="experience.html" class="nav-btn active">Experience</a>
+            <a href="resume.html"     class="nav-btn">Resume</a>
+            <a href="contact.html"    class="nav-btn">Contact</a>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="exp-content">
+
+        <!-- OVERVIEW — bold centered statement -->
+         <p class="exp-overview">
+            Rapidly prototyping innovative solutions to provide production assistance to active blockers throughout mid-body and BSC.
+        </p>
+
+
+        
+                 <h1>Highlights</h1>
+        <div class="highlights">
+            <div class="highlight-cell">
+                <span class="hl-value">3</span>
+                <span class="hl-label">Months</span>
+            </div>
+            <div class="highlight-cell">
+                <span class="hl-value">12</span>
+                <span class="hl-label">Inventions</span>
+            </div>
+            <div class="highlight-cell">
+                <span class="hl-value">10+</span>
+                <span class="hl-label">Shadowing Experiences</span>
+            </div>
+            <div class="highlight-cell">
+                <span class="hl-value">13</span>
+                <span class="hl-label">Projects Closed</span>
+            </div>
+        </div>
+    
+
+        <!-- ts dumb asf <hr class="exp-divider"> -->
+        <!-- WHAT I DID -->
+        <div class="exp-section">
+            <h1>Deep Dive: What I Did</h1>
+
+            <h2>Introduction</h2>
+                <p>Throughout the summer of 2026 I interned with Boeing South Carolina in the Mid-Body Innovation Cell (IC). It has been an engaging experience to learn
+                    about how production systems that have been running for years can still be improved day in and day out. I was able to actively contribute to many projects 
+                    and help teach/learn from rotational technicians in the IC.
+
+                </p>
+                <p style="text-align: center; font-style: italic; font-size: 0.78rem; color: #555; margin: -36px 0 56px; letter-spacing: 0.3px;">
+                    <br>All images are sources from publically available material.
+                </p>
+
+                <img src="images/BSC-10_nyt.jpg" alt="Firefly Team" style="width: 100%;">
+                <p style="text-align: center; font-style: italic; font-size: 0.78rem; color: #555; margin: -36px 0 56px; letter-spacing: 0.3px;">
+                    <br><br>Image from NYT.
+                </p>
+                <p>I started by working some smaller projects that were more simple shop-aids that assisted specific technicians in specific functions.
+                    This was a good intruduction to the factory setting compared to Firefly in the spring, and got me introuced to Catia and Enovia in terms of project management.
+                    Boeing South Carolina's airport campus is the production hub of the 787 Dreamliner and is separated into aft-body, mid-body, and final assembly. I worked specifically
+                    in the mid-body section (shown below). While working my projects I was also able to talk with engineers across various disciplines and backgrounds to learn what I want
+                    to continue into next summer.
+                </p>
+                <img src="images/MidBodySection787.jpg" alt="MidBodySection787" style="width: 100%;">
+                <p style="text-align: center; font-style: italic; font-size: 0.78rem; color: #555; margin: -36px 0 56px; letter-spacing: 0.3px;">
+                    <br><br>Image publicly available.
+                </p>
+                <p>Throughout the second half of the summer I worked alone for a good portion as the IC was in-between rotational programs.
+                    This was really benefecial to me as I got to have a large amount of ownership over each project. Despite this, I did find 
+                    there were some processes throughout the program that could have been streamlined which was frustrating knowing how things could
+                    be moving faster. It was really awesome to learn from a ton of industry experts on why such processes were in place though.
+                </p>
+                <img src="images/USA_Today_787AFT.jpg" alt="USAToday 787 Aft photo" style="width: 100%;">
+                <p style="text-align: center; font-style: italic; font-size: 0.78rem; color: #555; margin: -36px 0 56px; letter-spacing: 0.3px;">
+                    <br><br>Image from USA Today.
+                </p>
+                <p>By the end of the summer I had got all my projects to a completed state and was able to help train in some of the incoming rotators.
+                    I was also able to submit 12 of my projects for invention disclosure which will either be recognized with a patent or kept as industry secret.
+                    This was also really awesome to be able to meet with some of Boeings patent team and learn how Boeing keeps there spot in industry. Overall I had
+                    a good summer but want to move into a faster-paced environment for future internship experiences.
+                </p>
+        </div>
+
+    </div><!-- end .exp-content -->
+
+    <!-- OTHER EXPERIENCES — populated dynamically by experiences.js -->
+    <section class="other-exp-section">
+        <p class="section-label">Other Experiences</p>
+        <div class="preview-grid" id="related-grid">
+            <!-- Tiles injected by renderRelatedTiles() in experiences.js -->
+        </div>
+    </section>
+
+    <div class="bottom-back">
+        <a href="experience.html" class="back-btn">All Experience</a>
+    </div>
+
+    <footer>
+        &copy; 2026 Drew Novak &nbsp;&mdash;&nbsp; <a href="contact.html">Contact</a>
+    </footer>
+
+    <!-- Load the experience registry first, then render related tiles -->
+    <script src="experiences.js"></script>
+    <script src="nav.js"></script>
+    <script>
+        renderRelatedTiles('#related-grid', 'exp-boeing', 3);
+    </script>
+</body>
+</html>

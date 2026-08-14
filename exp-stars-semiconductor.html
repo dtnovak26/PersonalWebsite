@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semiconductor Intern — Drew Novak</title>
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        /* ============================================================
+           INDIVIDUAL EXPERIENCE PAGE TEMPLATE
+           ─────────────────────────────────────────────────────────────
+           To create a new experience page:
+           1. Copy this entire file, rename it (e.g. exp-your-topic.html)
+           2. Update the <title> tag
+           3. Update the hero image / fallback color in .exp-hero
+           4. Update the tag class (tag-internship / tag-research /
+              tag-personal / tag-student-team) and text
+           5. Fill in the section content
+           6. Add your card on experience.html pointing to this file
+           ============================================================ */
+
+        body { background: #111; }
+
+        /* ---- HERO ---- */
+        .exp-hero {
+            position: relative;
+            height: 55vh;
+            min-height: 320px;
+            overflow: hidden;
+            background: #1a2030;
+        }
+
+        .exp-hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.35);
+        }
+
+        .exp-hero-text {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 36px 48px;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
+        }
+
+        .exp-hero-text h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: white;
+            margin: 0 0 12px;
+            letter-spacing: 1px;
+        }
+
+        .hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .hero-org {
+            font-size: 0.85rem;
+            color: #aaa;
+            font-style: italic;
+        }
+
+        .hero-dates {
+            font-size: 0.72rem;
+            color: #666;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* ---- BACK BUTTON ---- */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            border: 2px solid #1EA3E6;
+            color: #1EA3E6;
+            padding: 10px 22px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            text-decoration: none;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .back-btn::before { content: '← '; }
+
+        .back-btn:hover {
+            background: #1EA3E6;
+            color: white;
+        }
+
+
+        /* Back button sizing in hero-meta row */
+
+        /* ---- CONTENT ---- */
+        .exp-content {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 64px 32px 48px;
+        }
+
+        /* Overview — centered bold statement */
+        .exp-overview {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #e8e8e8;
+            line-height: 1.7;
+            text-align: center;
+            max-width: 680px;
+            margin: 0 auto 56px;
+        }
+
+        /* Section headings */
+        .exp-content h2 {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 700;
+            color: #1EA3E6;
+            margin: 0 0 20px;
+        }
+
+        /* Highlight grid */
+        .highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 2px;
+            margin-bottom: 56px;
+        }
+
+        .highlight-cell {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 22px 20px;
+            text-align: center;
+        }
+
+        .highlight-cell .hl-value {
+            display: block;
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .highlight-cell .hl-label {
+            display: block;
+            font-size: 0.65rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #555;
+            margin-top: 6px;
+        }
+
+        /* Detail sections */
+        .exp-section { margin-bottom: 52px; }
+
+        .exp-section ul {
+            padding-left: 18px;
+            margin: 0;
+        }
+
+        .exp-section ul li {
+            font-size: 1.05rem;
+            color: #ccc;
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .exp-content p {
+            font-size: 1.05rem;
+            color: #ccc;
+            line-height: 1.8;
+            margin: 0 0 18px;
+        }
+
+        /* Image gallery */
+        .exp-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 6px;
+            margin-top: 20px;
+        }
+
+        .exp-gallery img {
+            width: 100%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-radius: 4px;
+            filter: brightness(0.8);
+            transition: var(--transition);
+        }
+
+        .exp-gallery img:hover { filter: brightness(1); transform: scale(1.02); }
+
+        /* Divider */
+        .exp-divider {
+            border: none;
+            border-top: 1px solid #222;
+            margin: 48px 0;
+        }
+
+        /* ---- OTHER EXPERIENCES ---- */
+        .other-exp-section {
+            padding: 72px 20px 48px;
+            background: #141414;
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            column-gap: 12.5%;
+            row-gap: 12.5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 12.5%;
+        }
+
+        .preview-tile {
+            position: relative;
+            aspect-ratio: 1;
+            overflow: hidden;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+
+        .preview-tile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            filter: brightness(0.45);
+        }
+
+        .tile-bg {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            opacity: 0.12;
+        }
+
+        .preview-tile:hover img { transform: scale(1.06); filter: brightness(0.6); }
+
+        .tile-label {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 22px 18px;
+            background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 60%);
+        }
+
+        .tile-label .tile-tag {
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .tile-label .tile-name {
+            font-size: 0.9rem;
+            color: white;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: 0.5px;
+        }
+
+        .preview-tile::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 3px;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.35s ease;
+        }
+
+        .preview-tile:hover::after { transform: scaleX(1); }
+
+        .preview-tile.pt-internship   .tile-label .tile-tag { color: #6ea8e0; }
+        .preview-tile.pt-internship::after   { background: var(--tag-internship); }
+        .preview-tile.pt-internship   .tile-bg { background: #1a2a3a; }
+
+        .preview-tile.pt-research     .tile-label .tile-tag { color: #6ec4a0; }
+        .preview-tile.pt-research::after     { background: var(--tag-research); }
+        .preview-tile.pt-research     .tile-bg { background: #1a2e25; }
+
+        .preview-tile.pt-personal     .tile-label .tile-tag { color: #b090e0; }
+        .preview-tile.pt-personal::after     { background: var(--tag-personal); }
+        .preview-tile.pt-personal     .tile-bg { background: #251a35; }
+
+        .preview-tile.pt-student-team .tile-label .tile-tag { color: #e0b060; }
+        .preview-tile.pt-student-team::after { background: var(--tag-student-team); }
+        .preview-tile.pt-student-team .tile-bg { background: #352512; }
+
+        /* ---- BOTTOM BACK BUTTON ---- */
+        .bottom-back {
+            background: #141414;
+            padding: 0 20px 64px;
+            display: flex;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .exp-hero-text { padding: 24px; }
+            .exp-hero-text h1 { font-size: 1.6rem; }
+            .exp-content { padding: 40px 20px 40px; }
+            .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            column-gap: 12.5%;
+            row-gap: 12.5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 12.5%;
+        }
+            .exp-overview { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO -->
+    <div class="exp-hero" style="background: #1a2030;">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:8rem;opacity:0.07;">⚡</div>
+        <img src="images/GF_Group.jpg" alt="Semiconductor lab">
+
+        <div class="exp-hero-text">
+            <h1>Semiconductor Manufacturing Engineering Research Intern</h1>
+            <div class="hero-meta">
+                <a href="experience.html" class="back-btn">All Experience</a>
+                <span class="tag-badge tag-internship">Internship</span>
+                <span class="hero-org">Purdue STARS — MIM Capacitors Team</span>
+                <span class="hero-dates">May - August 2025</span>
+            </div>
+        </div>
+    </div>
+    <nav style="position: relative; margin-bottom: 0;">
+        <a href="index.html" class="home-icon-btn" title="Home">
+            <img src="images/logo.jpeg" alt="Home">
+        </a>
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="nav-links" id="nav-links">
+            <a href="index.html"       class="nav-btn">Home</a>
+            <a href="about.html"      class="nav-btn">About</a>
+            <a href="experience.html" class="nav-btn active">Experience</a>
+            <a href="resume.html"     class="nav-btn">Resume</a>
+            <a href="contact.html"    class="nav-btn">Contact</a>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="exp-content">
+
+        <p class="exp-overview">
+            Researching and improving reliability of MIM capacitor manufacturing processes in the Birck Nanotechnology Cleanroom in Purdues Discover Park District. 
+            Presented findings to industry sponsors as well as at the Purdue summer undergraduate research convention.
+        </p>
+
+        <h1>Highlights</h1>
+        <div class="highlights">
+            <div class="highlight-cell">
+                <span class="hl-value">10</span>
+                <span class="hl-label">Weeks</span>
+            </div>
+            <div class="highlight-cell">
+                <span class="hl-value">Weekly</span>
+                <span class="hl-label">Stand up's</span>
+            </div>
+            <div class="highlight-cell">
+                <span class="hl-value">GF Tour</span>
+                <span class="hl-label">Fab 8, Malta NY</span>
+            </div>
+            <div class="highlight-cell">
+                <span class="hl-value">Fab</span>
+                <span class="hl-label">Experience and Improvement</span> <!-- check the length on this-->
+            </div>
+        </div>
+
+        <p class="exp-overview", color="#1EA3E6">
+            One of my personal highlights of the Fab 8 visit was former GF CEO Tom Caufield singling me out on the spot and saying, "You, tell me what your team does".
+             I responded without missing a stride He was impressed by something as simple as knowing that Halfnium dioxide was the dielectric we were working with :)
+        </p>
+        <div class="exp-section">
+            <h1>Deep Dive: What I Did</h1>
+            <h2>Introduction</h2>
+                <p>During the summer of 2025 I worked on the MIM (Metal-Insulator-Metal) Characterization subteam within Purdue's STARS program.
+                    The focus of the project was to understand how we could get consistent cleaner depositions of both TiNi and HfO2 dielectric.
+                    We trained on everything from actual class 100 cleanroom etiquitte, cleaning wafers, spinning photoresist, applying masks through
+                    photolithograhy, deposition through Atomic Layer Deposition (ALD) and Pulse Vapor Deposition (PVD) as well as charaacterizing our results
+                    through AFM measurements of our deposition to get a better understanding of our wall deposition as well as basic capactance (CV and IV) curves
+                    to analyze complete capacitors
+                </p>
+                <img src="images/BirckIntro.jpg" alt="Birck Nanotechnology Center" style="width:100%;border-radius:8px;margin-bottom:32px;">
+                <h2>Weeks 1 - 4: What I Did</h2>
+                <p>My work on the team started with the characterizing of already existing capacitors on 4" wafers provided by the VIP @Birck Spring 2025 Cohort.
+                    We used a combination of raw CV data from our 4-probe station as well as a Matlab and Python script I developed to extract the relevant metrics
+                    from a batch of raw data on the machine. Capacitors were laid out in groups of 100 across 5 pads with some columns missing the second TiNi pad (therefore 
+                    unable to measure capacitance but also able to measure HfO2 deposition effectiveness). We then took this data and developed a heat map of each 10x10 device square
+                    to determine that there was a coorelation between device location and final effectiveness. Even things as simple as devices closer to the bottom of the wafer (where
+                    it is picked up by tongs) were much less reliable!
+                    <br>
+                </p>
+                <img src="images/Stars_B1.jpg" style="width:100%;border-radius:8px;margin-bottom:32px;">
+                
+                <img src="images/Stars_B2.jpg" style="width:100%;border-radius:8px;margin-bottom:32px;">
+                
+                <img src="images/Stars_B3.jpg" style="width:100%;border-radius:8px;margin-bottom:32px;">
+                
+                <img src="images/STARS_Characterization.jpg" style="width:100%;border-radius:8px;margin-bottom:32px;">
+                
+                <p>    
+                    During this time our team was getting all of the neccessary training to operate safely within the Birck Nanotechnology Center (BNC) cleanroom. 
+                    This included everything from simple "clean-as-you-go" etiquitte to operation of complex machinery. As we were characterizing the failure points of 
+                    our current devices and getting training on how to manufacture, we developed a plan for our end of summer report out and what we wanted to focus on for
+                    the rest of the internship.
+                </p>
+                
+                <img src="images/Stars_B6.jpg" style="width:100%;border-radius:8px;margin-bottom:32px;">
+                <h2>Weeks 5 - 10: What I Did</h2>
+                <p>By this point we had determined that our original goal of developing a more effective mask for increased reliability would be unattainable during our
+                    short summer experience due to lack of machine, engineer, and training ability. With this in mind, we pivoted to focus on replicating and improving the
+                    current process to guide our sister VIP @Birck team in the fall on how to best continue our project. From our initial characteriziation experience we found 
+                    that our capacitance values were only reaching ~80% of what we were expecting. From this we determined a failure in the deposition process through either 1. 
+                    dielectric deposition, 2. metal deposition, and 3. photoresist removal. These analyzations were found from the basic capacitance equation: 
+                </p>
+                <math display="block">
+  <mrow>
+    <mi>C</mi>
+    <mo>=</mo>
+    <mi>&epsilon;</mi>
+    <mfrac>
+      <mi>A</mi>
+      <mi>d</mi>
+    </mfrac>
+  </mrow>
+</math>
+
+                <p>Because &epsilon is constant for HfO2 the error could be coming in the overlap of our layers (very possible given the manual masking method). 
+                    Distance between our plates (most likely due to spikes at the edge of masks, and undocumented processes specifically in the ALD machine).
+                    We were then able to come up with a test procedure that allowed us to test each of these potential causes and and determine the most likely cause.
+                    What it came down to was the layer deposition and inconsistencies in depth across the pad. I have attatched our final poster presentation that 
+                    explains this in much more detail below along with many of our processes. 
+                    <br>
+                </p>
+                
+                <img src="images/Stars_C1.jpg" style="width:100%;border-radius:8px;margin-bottom:32px;">
+                <img src="images/Stars_C2.jpg" style="width:100%;border-radius:8px;margin-bottom:32px;">
+                <img src="images/Stars_C3.jpg" style="width:100%;border-radius:8px;margin-bottom:32px;">
+                <img src="images/Stars_C4.jpg" style="width:100%;border-radius:8px;margin-bottom:32px;">
+                <p>
+                    What I specifically took away from this was the importance of system calibration. Many of the problems we ran into were equipment related 
+                    whether it be due to failures, inconsistencies, or literally random one-off events it was frustrating when these got in the way of our results.
+                    This highlighted the importance of maintaining a manufacturing-like standard of quality in a research setting. This is something that's incredibly
+                    difficult to do (especially with limited funding) but the more reliable your results are, the more applicable and impactful your research will become.
+                    This is a lesson I hope to take with me through the rest of my undergraduate research career and hopefully graduate education. I also found out how much
+                    I really like ECE related topics. My experience highlighted many important Electrical Engineering and Material Science topics which makes me glad I chose
+                    Mechanical Engineering. I was able to effectively pivot and problem solve in both categories. It also helped me reinforce my want to pursue Purdue's ECE minor
+                    as either within tech or aerospace, electromechanical fields are of high interest to me.
+                </p>
+                <h2>Highlight! GlobalFoundries Tour</h2>
+                <p>A highlight of the program was our teams specific spnsor - GlobalFoundries (GF) - flying us out to their Fab 8 facility in Malta, NY. This is one of the world's leading 
+                    advanced semiconductor manufacturing facilities. It was crazy to see the scale and precision in which they were able to operate, as well as how
+                    small issues like what we ran into at Birck were affecting their production as well. For me personally it also highlighted the tight connection
+                    between industry and academia in semiconductors. In a market where a very small number of companies dominate the market with high barriers to entry,
+                    they are able to really focus in on advanced topics and implementing them in their facilities is commercially viable. 
+                    <br>
+                </p>
+                <img src="images/GF_Indiv.jpg" style="width:100%;border-radius:8px;margin-bottom:32px;">
+                <p>
+                    One of my personal highlights of this visit was at the end of the day when former GF CEO Tom Caufield came to speak with us. He promptly asked our group
+                    of ~25 students who could tell us what we were working on. When no one raised their hand he looked around the room, stopped on me, pointed and said "You, tell me what your team does"
+                    I can confidently say I provided an effective answer to his question! He was impressed by something as simple as knowing that Halfnium dioxide was the dielectric we were working with :)
+                </p>
+                <img src="images/gficon.svg" style="width:100%;border-radius:8px;margin-bottom:32px;">
+                <h2>Reflection</h2>
+                <p>This experience gave me my first real taste of the semiocnductor industry through a manufacturing lense. Although I found the work deeply interesting
+                    it also taught me that I don't wish to pursue a career in semiconductor manufacturing. I learned that my skills are more effective in the design process
+                    and finding issues before they arise and fixing them. I also want to focus on a higher level system design and architecture rather than the nitty gritty of manufacturing processes 
+                    - this area is the research I am continuing into today. Despite this, <b>I truly believe you cannot be an effective design engineer without understanding and respect 
+                    for manufacturing engineering, and you cannot be an effective manufacturing engineer without the proper hands-on technical experience.</b>
+                </p>
+                <img src="images/AFM_Thumb.jpg" style="width:100%;border-radius:8px;margin-bottom:32px;">
+        </div>
+
+    </div><!-- end .exp-content -->
+
+    <!-- OTHER EXPERIENCES — populated dynamically by experiences.js -->
+    <section class="other-exp-section">
+        <p class="section-label">Other Experiences</p>
+        <div class="preview-grid" id="related-grid">
+            <!-- Tiles injected by renderRelatedTiles() in experiences.js -->
+        </div>
+    </section>
+
+    <div class="bottom-back">
+        <a href="experience.html" class="back-btn">All Experience</a>
+    </div>
+
+    <footer>
+        &copy; 2026 Drew Novak &nbsp;&mdash;&nbsp; <a href="contact.html">Contact</a>
+    </footer>
+
+    <!-- Load the experience registry first, then render related tiles -->
+    <script src="experiences.js"></script>
+    <script src="nav.js"></script>
+    <script>
+        renderRelatedTiles('#related-grid', 'exp-stars-semiconductor', 3);
+    </script>
+</body>
+</html>
