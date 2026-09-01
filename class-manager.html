@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ME Class Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Base Variables and Resets from your shared.css */
+        :root {
+            --bg-base: #1e1f23;
+            --bg-deep: #16171b;
+            --bg-surface: #25262b;
+            --border: rgba(255,255,255,0.07);
+            --text-main: #e8e8e8;
+            --text-muted: #8a8b92;
+            --accent: #1EA3E6;
+            --radius: 8px;
+            --transition: all 0.3s ease;
+            --danger: #ff4d4d;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            background-color: var(--bg-base);
+            color: #ddd;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        h1, button.active { font-weight: 800; }
+        h2, h3, .label { font-weight: 700; }
+
+        /* Layout */
+        .app-container { display: flex; min-height: 100vh; }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-deep);
+            border-right: 1px solid var(--border);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .brand {
+            color: var(--text-main);
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+        }
+
+        .nav-btn {
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            border-left: 3px solid transparent;
+            padding: 10px 15px;
+            text-align: left;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            border-radius: 0 var(--radius) var(--radius) 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-btn:hover {
+            color: var(--text-main);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .nav-btn.active {
+            color: var(--accent);
+            border-left: 3px solid var(--accent);
+            background: rgba(30, 163, 230, 0.1);
+        }
+
+        /* Forms */
+        form { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+
+        input[type="text"], input[type="date"], select {
+            flex: 1;
+            padding: 8px 12px;
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            border-radius: 6px;
+            font-family: 'Montserrat', sans-serif;
+            color-scheme: dark;
+        }
+
+        button.btn-add {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+        }
+        button.btn-add:hover { opacity: 0.9; }
+
+        button.btn-delete {
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        button.btn-delete:hover { color: var(--danger); }
+
+        /* Master Toggles */
+        .toggles-section {
+            margin-top: auto;
+            background: var(--bg-surface);
+            padding: 15px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+
+        .toggles-section h3 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin: 0 0 15px 0;
+        }
+
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .switch { position: relative; display: inline-block; width: 34px; height: 20px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--bg-base); border: 1px solid var(--border);
+            transition: .4s; border-radius: 20px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 14px; width: 14px; left: 2px; bottom: 2px;
+            background-color: var(--text-muted); transition: .4s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent); border-color: var(--accent); }
+        input:checked + .slider:before { transform: translateX(14px); background-color: white; }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .header-title {
+            font-size: 2rem;
+            color: var(--text-main);
+            margin-top: 0;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .panel {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: 0 10px 32px rgba(0,0,0,0.42);
+        }
+
+        .panel h2 {
+            margin: 0 0 20px 0;
+            font-size: 1.1rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .task-legend {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            margin: -12px 0 14px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Scrollable task lists (so the whole page doesn't grow with them) */
+        #active-task-list {
+            max-height: 520px;
+            overflow-y: auto;
+            padding-right: 6px;
+        }
+        #completed-task-list {
+            max-height: 260px;
+            overflow-y: auto;
+            padding-right: 6px;
+        }
+        #active-task-list::-webkit-scrollbar,
+        #completed-task-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        #active-task-list::-webkit-scrollbar-thumb,
+        #completed-task-list::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        /* Todo List */
+        .todo-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: var(--radius);
+            background: rgba(0,0,0,0.2);
+            border-left: 3px solid transparent;
+        }
+        .todo-item input[type="checkbox"] {
+            margin-top: 5px;
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
+        .todo-content { flex: 1; }
+        .todo-text { font-size: 0.95rem; color: var(--text-main); cursor: pointer; }
+        .todo-text:hover { color: var(--accent); }
+        .todo-meta { font-size: 0.75rem; font-weight: 700; margin-top: 4px; }
+
+        .todo-item.completed .todo-text {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        /* Per-task notes */
+        .todo-notes {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border);
+        }
+        .notes-list {
+            list-style: none;
+            margin: 0 0 8px 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .notes-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 0.82rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            padding-left: 14px;
+            position: relative;
+        }
+        .notes-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        .note-delete {
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 0.68rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .note-delete:hover { color: var(--danger); }
+        .note-form {
+            display: flex;
+            gap: 6px;
+            margin: 0;
+        }
+        .note-form input[type="text"] {
+            padding: 6px 10px;
+            font-size: 0.8rem;
+        }
+        .btn-add-sm {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.8rem;
+            font-family: 'Montserrat', sans-serif;
+            flex-shrink: 0;
+        }
+        .btn-add-sm:hover { opacity: 0.9; }
+
+        /* Collapsible Done Tab */
+        details.done-tab {
+            margin-top: 20px;
+            background: rgba(0,0,0,0.1);
+            border-radius: var(--radius);
+            padding: 10px;
+            border: 1px solid var(--border);
+        }
+        details.done-tab summary {
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        details.done-tab[open] summary { margin-bottom: 15px; }
+
+        /* --- Calendar Header / Navigation --- */
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .calendar-header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .calendar-nav-btn {
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            line-height: 1;
+            transition: var(--transition);
+        }
+        .calendar-nav-btn:hover { background: rgba(255,255,255,0.08); border-color: var(--text-muted); }
+
+        .calendar-today-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Montserrat', sans-serif;
+            transition: var(--transition);
+        }
+        .calendar-today-btn:hover { color: var(--text-main); border-color: var(--text-muted); }
+
+        .calendar-title {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-left: 4px;
+        }
+
+        .view-switcher {
+            display: flex;
+            gap: 2px;
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 2px;
+        }
+
+        .view-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.66rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Montserrat', sans-serif;
+            transition: var(--transition);
+        }
+        .view-btn.active { background: var(--accent); color: white; }
+        .view-btn:hover:not(.active) { color: var(--text-main); }
+
+        /* --- Month Grid --- */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 5px;
+        }
+        .day-name {
+            text-align: center;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 700;
+            padding-bottom: 5px;
+        }
+        .day-cell {
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            min-height: 80px;
+            max-height: 260px;
+            min-width: 0;
+            padding: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .day-cell:hover { border-color: var(--text-muted); }
+        .day-cell.other-month { opacity: 0.35; }
+        .day-cell.is-today {
+            border-color: var(--accent);
+            box-shadow: inset 0 0 0 1px var(--accent);
+        }
+        .day-number {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            align-self: flex-end;
+            font-weight: 700;
+        }
+        .day-cell.is-today .day-number {
+            color: white;
+            background: var(--accent);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+        .cal-event {
+            font-size: 0.65rem;
+            padding: 3px 5px;
+            border-radius: 3px;
+            color: white;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
+            flex-shrink: 0;
+        }
+
+        /* --- Week View --- */
+        .week-grid {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 5px;
+        }
+        .week-day-col {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .week-day-header {
+            text-align: center;
+            padding: 6px 2px;
+            border-radius: 4px;
+        }
+        .week-day-header .wd-name {
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.6rem;
+            letter-spacing: 1px;
+        }
+        .week-day-header .wd-num {
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+        .week-day-header.is-today { background: rgba(30, 163, 230, 0.15); }
+        .week-day-header.is-today .wd-num { color: var(--accent); }
+        .week-day-body {
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            min-height: 260px;
+            max-height: 260px;
+            min-width: 0;
+            padding: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .week-day-body:hover { border-color: var(--text-muted); }
+        .week-day-body.is-today { border-color: var(--accent); }
+        .week-day-body .cal-event { white-space: normal; }
+
+        /* --- Day View --- */
+        .day-view { display: flex; flex-direction: column; gap: 10px; }
+        .day-view-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+        .day-view-header.is-today { border-color: var(--accent); }
+        .day-view-today-pill {
+            color: var(--accent);
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .day-view-list { display: flex; flex-direction: column; gap: 8px; min-height: 120px; }
+        .day-view-event {
+            padding: 10px 14px;
+            border-radius: 6px;
+            color: white;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+        .day-view-empty {
+            color: var(--text-muted);
+            text-align: center;
+            padding: 30px;
+            font-size: 0.85rem;
+            border: 1px dashed var(--border);
+            border-radius: 6px;
+        }
+
+        @media (max-width: 900px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">ME Portal</div>
+
+            <form id="class-form">
+                <input type="text" id="new-class-input" placeholder="New class name..." required>
+                <button type="submit" class="btn-add">+</button>
+            </form>
+
+            <div id="nav-container">
+                <!-- Class tabs injected here -->
+            </div>
+
+            <!-- Master Filter Toggles -->
+            <div class="toggles-section" id="master-toggles">
+                <h3>Master Filters</h3>
+                <div id="toggle-container">
+                    <!-- Toggles injected here -->
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <h1 class="header-title" id="page-title">Master Dashboard</h1>
+
+            <div class="dashboard-grid">
+                <!-- Todo List Panel -->
+                <div class="panel">
+                    <h2>Tasks</h2>
+                    <div class="task-legend">📖 Reading &nbsp; ✏️ Homework &nbsp; 🧪 Exam &nbsp; • Other</div>
+
+                    <form id="task-form">
+                        <input type="text" id="new-task-input" placeholder="Add a new task..." required>
+                        <select id="task-class-select" style="display: none;"></select>
+                        <select id="task-type-select">
+                            <option value="reading">Reading</option>
+                            <option value="homework" selected>Homework</option>
+                            <option value="exam">Exam</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <input type="date" id="task-date-input" required>
+                        <button type="submit" class="btn-add">Add</button>
+                    </form>
+
+                    <div id="active-task-list"></div>
+
+                    <details class="done-tab" id="done-tab-container">
+                        <summary>Done (<span id="done-count">0</span>)</summary>
+                        <div id="completed-task-list"></div>
+                    </details>
+                </div>
+
+                <!-- Calendar Panel -->
+                <div class="panel">
+                    <div class="calendar-header">
+                        <div class="calendar-header-left">
+                            <button class="calendar-nav-btn" id="cal-prev" type="button" aria-label="Previous">&#8249;</button>
+                            <button class="calendar-nav-btn" id="cal-next" type="button" aria-label="Next">&#8250;</button>
+                            <button class="calendar-today-btn" id="cal-today" type="button">Today</button>
+                            <span class="calendar-title" id="calendar-title"></span>
+                        </div>
+                        <div class="view-switcher" id="view-switcher">
+                            <button class="view-btn" data-view="day" type="button">Day</button>
+                            <button class="view-btn" data-view="week" type="button">Week</button>
+                            <button class="view-btn active" data-view="month" type="button">Month</button>
+                        </div>
+                    </div>
+                    <div id="calendar-body">
+                        <!-- Month/Week/Day view injected here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Tag colors for auto-generated (user-added) classes
+        const colors = ['#1EA3E6', '#3a8a6a', '#c07a30', '#7a5aaa', '#e8e8e8'];
+
+        // Icons/labels for task types
+        const TASK_TYPES = {
+            reading:  { label: 'Reading',  icon: '📖' },
+            homework: { label: 'Homework', icon: '✏️' },
+            exam:     { label: 'Exam',     icon: '🧪' },
+            other:    { label: 'Task',     icon: '•' }
+        };
+
+        // --- STATE MANAGEMENT (Local Storage) ---
+        let classes = JSON.parse(localStorage.getItem('me_classes')) || [];
+        let tasks = JSON.parse(localStorage.getItem('me_tasks')) || [];
+
+        // Migrate legacy tasks: bare "day" number (assumed Aug 2026) -> real date; ensure a type/notes exist
+        tasks.forEach(t => {
+            if (!t.date && t.day) {
+                t.date = `2026-08-${String(t.day).padStart(2, '0')}`;
+                delete t.day;
+            }
+            if (!t.type) t.type = 'other';
+            if (!t.notes) t.notes = [];
+        });
+
+        // --- SEED DATA: core Fall 2026 classes ---
+        function buildSeedTasks(classId, prefix, readings, exams) {
+            const out = [];
+            readings.forEach(([date, text], i) => {
+                out.push({ id: `${prefix}_r${i + 1}`, text, classId, date, type: 'reading', completed: false });
+            });
+            exams.forEach(([date, text], i) => {
+                out.push({ id: `${prefix}_e${i + 1}`, text, classId, date, type: 'exam', completed: false });
+            });
+            return out;
+        }
+
+        const seedClasses = [
+            { id: 'fund2',   name: 'Fundamentals II',        color: '#1EA3E6', activeOnMaster: true },
+            { id: 'me308',   name: 'ME 308 \u2013 Fluid Mechanics', color: '#3a8a6a', activeOnMaster: true },
+            { id: 'me365',   name: 'ME 365 \u2013 Measurements',    color: '#c07a30', activeOnMaster: true },
+            { id: 'me264',   name: 'ME 264',                 color: '#7a5aaa', activeOnMaster: true },
+            { id: 'strt312', name: 'STRT 312',                color: '#3d6fa3', activeOnMaster: true }
+        ];
+
+        const fund2Readings = [
+            ['2026-08-24', "Field-Effect Transistors (Ch. 2)"],
+            ['2026-08-26', "MOSFET Operational Concepts (Ch. 2)"],
+            ['2026-08-28', "MOSFETs in Circuits; DC Operational Concepts (Ch. 3)"],
+            ['2026-08-31', "Transistors as Amplifiers (Ch. 4)"],
+            ['2026-09-02', "Common-Source Amplifier Circuits (Ch. 5)"],
+            ['2026-09-04', "Single-Transistor Amplifier Circuits (Ch. 6)"],
+            ['2026-09-11', "Freq. Range for FET Amps \u2013 Low Freq. Cutoff (Ch. 30)"],
+            ['2026-09-14', "Freq. Range for FET Amps \u2013 High Freq. Cutoff (Ch. 31)"],
+            ['2026-09-16', "Op Amp Basics (Ch. 1, 7)"],
+            ['2026-09-18', "Op Amp Circuits (Ch. 1, 7)"],
+            ['2026-09-21', "Op Amp Circuits, cont. (Ch. 1, 7)"],
+            ['2026-09-23', "ODEs for RC and RL Circuits (Ch. 8, 9)"],
+            ['2026-09-28', "ODEs for LC Circuits (Ch. 10)"],
+            ['2026-09-30', "ODEs for RLC Circuits (Ch. 11)"],
+            ['2026-10-05', "Analysis of Switched Circuits (Ch. 12)"],
+            ['2026-10-07', "Convolution I (Ch. 13, 14)"],
+            ['2026-10-09', "Convolution II (Ch. 13, 14)"],
+            ['2026-10-16', "Impulse Response (Ch. 16)"],
+            ['2026-10-19', "Introduction to Laplace Transforms (Ch. 18)"],
+            ['2026-10-21', "Properties of Laplace Transforms (Ch. 19)"],
+            ['2026-10-23', "Inverse Laplace Transforms (Ch. 20)"],
+            ['2026-10-26', "Impedance, Admittance, and Zero-State Response (Ch. 21)"],
+            ['2026-10-28', "Initial Conditions in Laplace Transforms (Ch. 22)"],
+            ['2026-10-30', "Decomposition of the Complete Response (Ch. 24)"],
+            ['2026-11-06', "Transfer Functions (Ch. 23)"],
+            ['2026-11-09', "The Complex Plane and Stability (Ch. 25)"],
+            ['2026-11-11', "Resonance and 2nd-Order Systems (Ch. 26)"],
+            ['2026-11-13', "Basics of Frequency Response I (Ch. 27)"],
+            ['2026-11-16', "Basics of Frequency Response II (Ch. 27)"],
+            ['2026-11-18', "Magnitude and Frequency Scaling (Ch. 28)"],
+            ['2026-11-20', "Bandpass Response of 2nd-Order Systems (Ch. 29)"],
+            ['2026-11-30', "Passive Low-Pass Filter (Ch. 32)"],
+            ['2026-12-02', "Butterworth Low-Pass Filter Design (Ch. 33)"],
+            ['2026-12-07', "Butterworth High-Pass Filter Design from LPF (Ch. 34)"],
+            ['2026-12-09', "Active Low-Pass Filters (Ch. 35)"]
+        ];
+        const fund2Exams = [
+            ['2026-09-30', "Exam 1 \u2014 8:00\u20139:00 PM, RHPH 172 / BHEE 170"],
+            ['2026-10-28', "Exam 2 \u2014 8:00\u20139:00 PM, BHEE 129"],
+            ['2026-12-01', "Exam 3 \u2014 8:00\u20139:00 PM, BHEE 129"]
+        ];
+
+        const me308Readings = [
+            ['2026-08-24', "Introduction; Fundamental Concepts (pp. 1-13, 15-17, A1-A3)"],
+            ['2026-08-26', "Fluid Statics \u2013 Hydrostatic Pressure Variation; Barometry & Manometry (pp. 38-48)"],
+            ['2026-08-28', "Fluid Statics \u2013 Hydrostatic Force & Center of Pressure, Planar Surfaces (pp. 50-57, 60-63, 68)"],
+            ['2026-08-31', "Fluid Statics \u2013 Hydrostatic Force & Center of Pressure, Curved Surfaces (pp. 50-57, 60-63, 68)"],
+            ['2026-09-02', "Fluid Statics \u2013 Buoyant Force and Center of Buoyancy (pp. 50-57, 60-63, 68)"],
+            ['2026-09-04', "Flow Visualization \u2013 Streamlines, Streaklines, Pathlines (pp. 17-23)"],
+            ['2026-09-09', "Viscosity; Viscometers (pp. 23-29, A5-A12)"],
+            ['2026-09-11', "Integral Control Volumes \u2013 Conservation of Mass (pp. 70-82)"],
+            ['2026-09-14', "Integral CV \u2013 Linear Momentum Eq., Fixed Frame (pp. 82-93)"],
+            ['2026-09-16', "Bernoulli's Equation (pp. 93-96, 169-177)"],
+            ['2026-09-18', "Integral CV \u2013 Moving Frame (pp. 97-99)"],
+            ['2026-09-21', "Integral CV \u2013 Accelerating Frame (pp. 99-105)"],
+            ['2026-09-23', "Integral CV \u2013 Applications (pp. 97-105)"],
+            ['2026-09-25', "Integral CV \u2013 Conservation of Energy and Bernoulli (pp. 118-125, 177-181)"],
+            ['2026-09-28', "Differential CV \u2013 Couette Flow (pp. 230-241)"],
+            ['2026-09-30', "Differential CV \u2013 Poiseuille Flow (pp. 241-245)"],
+            ['2026-10-07', "Dimensional Analysis \u2013 Buckingham-Pi Theorem; Repeating Variables (pp. 202-204, 206-214)"],
+            ['2026-10-09', "Dimensional Analysis \u2013 Similarity and Scaling (pp. 214-225)"],
+            ['2026-10-14', "Intro to Boundary Layers \u2013 BL Thickness (pp. 293-298)"],
+            ['2026-10-16', "Laminar Boundary Layers \u2013 Blasius Solution (pp. 300-311)"],
+            ['2026-10-19', "Turbulent Boundary Layers (pp. 311-314)"],
+            ['2026-10-21', "Pressure Gradient Effects on BL and Separation (pp. 314-316)"],
+            ['2026-10-23', "Flow About Immersed Bodies \u2013 Drag Coefficient, Reynolds Number (pp. 316-328)"],
+            ['2026-10-26', "Flow About Immersed Bodies \u2013 Lift and Drag (pp. 328-329, 337-341)"],
+            ['2026-10-28', "Pipe Flows \u2013 Extended Bernoulli's Equation (pp. 177-181, 227-229, 241-253)"],
+            ['2026-10-30', "Pipe Flows \u2013 Major and Minor Head Losses; Moody Plot (pp. 253-263)"],
+            ['2026-11-02', "Solving Pipe Flow Problems \u2013 Single Path Systems (pp. 263-276)"],
+            ['2026-11-04', "Intro to Fluid Machinery; Specific Speed (pp. 343-348, 352-358)"],
+            ['2026-11-06', "Performance Characteristics; Similarity & Scaling for Pumps (pp. 362-371, A15-A25)"],
+            ['2026-11-09', "Fluid Machinery \u2013 Pump Types; Head Curve; Best Efficiency Point (pp. 362-371, A15-A25)"],
+            ['2026-11-11', "Fluid Machinery \u2013 Operating Point and NPSH (pp. 371-379)"],
+            ['2026-11-18', "Compressible Flow \u2013 Introduction; Speed of Sound (pp. 279-286)"],
+            ['2026-11-20', "Compressible Flow \u2013 Mach Number; Mach Cone; Isentropic Flow (pp. 460-467)"],
+            ['2026-11-23', "Compressible Flow \u2013 1-D Isentropic Flow (pp. 467-480)"],
+            ['2026-11-30', "Compressible Flow \u2013 Isentropic Flow with Area Change (pp. 480-491, A26-A27)"],
+            ['2026-12-02', "Compressible Flow \u2013 Converging-Diverging Nozzles and Normal Shocks (pp. 501-507, A27-A28)"],
+            ['2026-12-04', "Compressible Flow \u2013 Converging-Diverging Nozzles (pp. 496-500, 507-511)"]
+        ];
+        const me308Exams = [
+            ['2026-10-05', "Evening Exam I \u2014 Lectures 1\u201317, 8:00\u201310:00 PM"],
+            ['2026-11-16', "Evening Exam II \u2014 Lectures 1\u201333, 8:00\u201310:00 PM"]
+        ];
+
+        const me365Readings = [
+            ['2026-08-26', "Translational Mechanical Systems (PEI 2.1)"],
+            ['2026-08-28', "Rotational Mechanical Systems (PEI 2.1)"],
+            ['2026-08-31', "Electromechanical Systems (PEI 2.2\u20132.3)"],
+            ['2026-09-09', "Laplace Transform (PEI 3.1.3\u20133.1.5)"],
+            ['2026-09-11', "Solving ODEs with Laplace Transform (PEI 3.1.6\u20133.1.7)"],
+            ['2026-09-14', "Free Response and Stability (PEI 3.6.1\u20133.6.2)"],
+            ['2026-09-16', "Forced Response and Transfer Function (PEI 3.1.7)"],
+            ['2026-09-18', "Time Response of 1st Order Systems (PEI 3.3\u20133.5)"],
+            ['2026-09-21', "Time Response of 2nd Order Systems I (PEI 3.3\u20133.5)"],
+            ['2026-09-23', "Time Response of 2nd Order Systems II (PEI 3.3\u20133.5)"],
+            ['2026-09-25', "Time Domain System Identification (PEI 3.7)"],
+            ['2026-09-28', "Frequency Response (PEI 6.1.1)"],
+            ['2026-09-30', "Bode Plots I (PEI 6.1.3)"],
+            ['2026-10-02', "Bode Plots II (PEI 6.1.3)"],
+            ['2026-10-14', "Fourier Series (Notes Ch. 8)"],
+            ['2026-10-16', "Frequency Spectra (Notes Ch. 8)"],
+            ['2026-10-19', "Spectral Analysis (Notes Ch. 8)"],
+            ['2026-10-21', "Static Calibration (Notes Ch. 2)"],
+            ['2026-10-26', "Analog to Digital Conversion (Notes Ch. 3)"],
+            ['2026-10-28', "Data Acquisition and Aliasing (Notes Ch. 3)"],
+            ['2026-11-02', "Probability (Notes Ch. 4)"],
+            ['2026-11-04', "Statistics (Notes Ch. 4)"],
+            ['2026-11-11', "Confidence Interval & Error Propagation (Notes Ch. 4)"],
+            ['2026-11-16', "Noise Analysis (Notes Ch. 11)"],
+            ['2026-11-18', "Noise Reduction (Notes Ch. 11)"],
+            ['2026-11-23', "Modulation (Notes Ch. 10)"],
+            ['2026-11-30', "Demodulation (Notes Ch. 10)"],
+            ['2026-12-02', "Bridge Circuits (Notes Ch. 9)"],
+            ['2026-12-07', "Variable Impedance Device (Notes Ch. 9)"],
+            ['2026-12-09', "Passive Filter and Loading (Notes Ch. 7)"]
+        ];
+        const me365Exams = [
+            ['2026-10-08', "Evening Exam I \u2014 Lectures 1\u201314, 6:30\u20137:30 PM (WTHR 200 + CL50 224 / LE102+LE103)"],
+            ['2026-11-10', "Evening Exam II \u2014 Lectures 15\u201325, 8:00\u20139:00 PM (BHEE 129 + RHPH 172 + BRNG 1278 / LE102+LE103)"]
+        ];
+
+        const seedTasks = [
+            ...buildSeedTasks('fund2', 'fund2', fund2Readings, fund2Exams),
+            ...buildSeedTasks('me308', 'me308', me308Readings, me308Exams),
+            ...buildSeedTasks('me365', 'me365', me365Readings, me365Exams)
+        ];
+
+        // Merge seed data in once (won't re-add things you've deleted on later loads)
+        const SEED_VERSION = 'core-classes-v1';
+        if (localStorage.getItem('me_seed_version') !== SEED_VERSION) {
+            seedClasses.forEach(sc => {
+                if (!classes.find(c => c.id === sc.id)) classes.push(sc);
+            });
+            seedTasks.forEach(st => {
+                if (!tasks.find(t => t.id === st.id)) tasks.push(st);
+            });
+            localStorage.setItem('me_seed_version', SEED_VERSION);
+        }
+
+        let currentTab = 'master';
+        let currentView = 'month';           // 'day' | 'week' | 'month'
+        let currentDate = new Date();        // anchor date for whatever view is showing
+        currentDate.setHours(0, 0, 0, 0);
+        let expandedTaskIds = new Set();      // which tasks currently have their notes panel open
+
+        function saveData() {
+            localStorage.setItem('me_classes', JSON.stringify(classes));
+            localStorage.setItem('me_tasks', JSON.stringify(tasks));
+        }
+        saveData(); // persist any migration/seed merge from above
+
+        // --- DATE HELPERS ---
+        function pad(n) { return String(n).padStart(2, '0'); }
+        function dateKey(d) { return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; }
+        function parseDateKey(key) {
+            const [y, m, d] = key.split('-').map(Number);
+            return new Date(y, m - 1, d);
+        }
+        function isSameDay(a, b) {
+            return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+        }
+        function isToday(d) { return isSameDay(d, new Date()); }
+        function addDays(d, n) { const r = new Date(d); r.setDate(r.getDate() + n); return r; }
+        function addMonths(d, n) { const r = new Date(d); r.setMonth(r.getMonth() + n); return r; }
+        function startOfWeek(d) { const r = new Date(d); r.setDate(r.getDate() - r.getDay()); r.setHours(0, 0, 0, 0); return r; }
+        function formatDisplayDate(key) {
+            if (!key) return '';
+            return parseDateKey(key).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        }
+        function formatWeekRange(start, end) {
+            const sameMonth = start.getMonth() === end.getMonth();
+            if (sameMonth) {
+                return `${start.toLocaleDateString('en-US', { month: 'short' })} ${start.getDate()} \u2013 ${end.getDate()}, ${end.getFullYear()}`;
+            }
+            return `${start.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} \u2013 ${end.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}, ${end.getFullYear()}`;
+        }
+
+        // --- DOM ELEMENTS ---
+        const navContainer = document.getElementById('nav-container');
+        const toggleContainer = document.getElementById('toggle-container');
+        const classForm = document.getElementById('class-form');
+        const classInput = document.getElementById('new-class-input');
+
+        const taskForm = document.getElementById('task-form');
+        const taskInput = document.getElementById('new-task-input');
+        const taskDateInput = document.getElementById('task-date-input');
+        const taskClassSelect = document.getElementById('task-class-select');
+        const taskTypeSelect = document.getElementById('task-type-select');
+
+        const activeTaskListEl = document.getElementById('active-task-list');
+        const completedTaskListEl = document.getElementById('completed-task-list');
+        const doneCountEl = document.getElementById('done-count');
+        const pageTitle = document.getElementById('page-title');
+        const masterToggles = document.getElementById('master-toggles');
+
+        const calTitleEl = document.getElementById('calendar-title');
+        const calBodyEl = document.getElementById('calendar-body');
+        const calPrevBtn = document.getElementById('cal-prev');
+        const calNextBtn = document.getElementById('cal-next');
+        const calTodayBtn = document.getElementById('cal-today');
+        const viewButtons = document.querySelectorAll('.view-btn');
+
+        // --- RENDER FUNCTIONS ---
+        function init() {
+            renderSidebar();
+            renderDashboard();
+        }
+
+        function renderSidebar() {
+            // Render Nav Buttons
+            navContainer.innerHTML = '';
+
+            const masterBtn = document.createElement('button');
+            masterBtn.className = `nav-btn ${currentTab === 'master' ? 'active' : ''}`;
+            masterBtn.innerText = 'Master Dashboard';
+            masterBtn.addEventListener('click', () => switchTab('master'));
+            navContainer.appendChild(masterBtn);
+
+            classes.forEach(cls => {
+                const btn = document.createElement('button');
+                btn.className = `nav-btn ${currentTab === cls.id ? 'active' : ''}`;
+                btn.style.borderLeftColor = currentTab === cls.id ? cls.color : 'transparent';
+
+                const nameSpan = document.createElement('span');
+                nameSpan.style.flex = '1';
+                nameSpan.innerText = cls.name;
+                nameSpan.addEventListener('click', () => switchTab(cls.id));
+                btn.appendChild(nameSpan);
+
+                const delSpan = document.createElement('span');
+                delSpan.className = 'btn-delete';
+                delSpan.innerText = '✕';
+                delSpan.addEventListener('click', (event) => deleteClass(cls.id, event));
+                btn.appendChild(delSpan);
+
+                navContainer.appendChild(btn);
+            });
+
+            // Render Master Toggles
+            toggleContainer.innerHTML = '';
+            classes.forEach((cls, index) => {
+                const row = document.createElement('div');
+                row.className = 'toggle-row';
+
+                const label = document.createElement('span');
+                label.style.color = cls.color;
+                label.innerText = cls.name;
+                row.appendChild(label);
+
+                const switchLabel = document.createElement('label');
+                switchLabel.className = 'switch';
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = cls.activeOnMaster;
+                checkbox.addEventListener('change', () => toggleMasterClass(index));
+                const slider = document.createElement('span');
+                slider.className = 'slider';
+                switchLabel.appendChild(checkbox);
+                switchLabel.appendChild(slider);
+                row.appendChild(switchLabel);
+
+                toggleContainer.appendChild(row);
+            });
+        }
+
+        function switchTab(tabId) {
+            currentTab = tabId;
+            renderSidebar();
+
+            if (tabId === 'master') {
+                pageTitle.innerText = 'Master Dashboard';
+                masterToggles.style.display = 'block';
+                taskClassSelect.style.display = 'block'; // Need to pick a class when adding from master
+
+                // Populate class dropdown
+                taskClassSelect.innerHTML = '';
+                classes.forEach(cls => {
+                    const opt = document.createElement('option');
+                    opt.value = cls.id;
+                    opt.innerText = cls.name;
+                    taskClassSelect.appendChild(opt);
+                });
+            } else {
+                const cls = classes.find(c => c.id === tabId);
+                pageTitle.innerText = cls.name;
+                masterToggles.style.display = 'none';
+                taskClassSelect.style.display = 'none'; // Auto-assigns to current tab
+            }
+
+            renderDashboard();
+        }
+
+        function renderDashboard() {
+            renderTasks();
+            renderCalendar();
+        }
+
+        function renderTasks() {
+            activeTaskListEl.innerHTML = '';
+            completedTaskListEl.innerHTML = '';
+            let doneCount = 0;
+
+            let classesToRender = currentTab === 'master'
+                ? classes.filter(c => c.activeOnMaster)
+                : classes.filter(c => c.id === currentTab);
+
+            let activeIds = classesToRender.map(c => c.id);
+            let filteredTasks = tasks.filter(t => activeIds.includes(t.classId));
+
+            // Sort by date (ISO strings sort chronologically)
+            filteredTasks.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+            filteredTasks.forEach(task => {
+                const cls = classes.find(c => c.id === task.classId);
+                const typeInfo = TASK_TYPES[task.type] || TASK_TYPES.other;
+                const notes = task.notes || [];
+                const isExpanded = expandedTaskIds.has(task.id);
+
+                const item = document.createElement('div');
+                item.className = `todo-item ${task.completed ? 'completed' : ''}`;
+                item.style.borderLeftColor = cls ? cls.color : '#ccc';
+                item.dataset.taskId = String(task.id);
+
+                // Checkbox
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = task.completed;
+                checkbox.addEventListener('change', () => toggleTask(task.id));
+                item.appendChild(checkbox);
+
+                // Content wrapper
+                const content = document.createElement('div');
+                content.className = 'todo-content';
+
+                const textEl = document.createElement('div');
+                textEl.className = 'todo-text';
+                textEl.innerText = task.text;
+                textEl.addEventListener('click', () => toggleNotes(task.id));
+                content.appendChild(textEl);
+
+                const metaEl = document.createElement('div');
+                metaEl.className = 'todo-meta';
+                metaEl.style.color = cls ? cls.color : '#ccc';
+                metaEl.innerText = `${typeInfo.icon} ${typeInfo.label} • ${cls ? cls.name : 'Unknown'} • ${formatDisplayDate(task.date)}${notes.length ? ` • 📝 ${notes.length}` : ''}`;
+                content.appendChild(metaEl);
+
+                // Notes panel
+                const notesWrap = document.createElement('div');
+                notesWrap.className = 'todo-notes';
+                notesWrap.style.display = isExpanded ? 'block' : 'none';
+
+                if (notes.length) {
+                    const ul = document.createElement('ul');
+                    ul.className = 'notes-list';
+                    notes.forEach((note, idx) => {
+                        const li = document.createElement('li');
+
+                        const span = document.createElement('span');
+                        span.innerText = note;
+                        li.appendChild(span);
+
+                        const del = document.createElement('span');
+                        del.className = 'note-delete';
+                        del.title = 'Remove note';
+                        del.innerText = '✕';
+                        del.addEventListener('click', () => deleteNote(task.id, idx));
+                        li.appendChild(del);
+
+                        ul.appendChild(li);
+                    });
+                    notesWrap.appendChild(ul);
+                }
+
+                const noteForm = document.createElement('form');
+                noteForm.className = 'note-form';
+                const noteInput = document.createElement('input');
+                noteInput.type = 'text';
+                noteInput.placeholder = 'Add a note...';
+                noteForm.appendChild(noteInput);
+                const noteBtn = document.createElement('button');
+                noteBtn.type = 'submit';
+                noteBtn.className = 'btn-add-sm';
+                noteBtn.innerText = '+';
+                noteForm.appendChild(noteBtn);
+                noteForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    addNote(task.id, noteInput.value);
+                });
+                notesWrap.appendChild(noteForm);
+
+                content.appendChild(notesWrap);
+                item.appendChild(content);
+
+                // Delete button
+                const delBtn = document.createElement('button');
+                delBtn.className = 'btn-delete';
+                delBtn.innerText = '✕';
+                delBtn.addEventListener('click', () => deleteTask(task.id));
+                item.appendChild(delBtn);
+
+                if (task.completed) {
+                    completedTaskListEl.appendChild(item);
+                    doneCount++;
+                } else {
+                    activeTaskListEl.appendChild(item);
+                }
+            });
+
+            doneCountEl.innerText = doneCount;
+            if (activeTaskListEl.innerHTML === '') {
+                activeTaskListEl.innerHTML = '<div style="color: var(--text-muted); text-align: center; padding: 20px;">No tasks right now!</div>';
+            }
+        }
+
+        function renderCalendar() {
+            calBodyEl.innerHTML = '';
+
+            let classesToRender = currentTab === 'master'
+                ? classes.filter(c => c.activeOnMaster)
+                : classes.filter(c => c.id === currentTab);
+            let activeIds = classesToRender.map(c => c.id);
+
+            if (currentView === 'month') {
+                calTitleEl.innerText = currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+                renderMonthView(activeIds);
+            } else if (currentView === 'week') {
+                const start = startOfWeek(currentDate);
+                const end = addDays(start, 6);
+                calTitleEl.innerText = formatWeekRange(start, end);
+                renderWeekView(activeIds, start);
+            } else {
+                calTitleEl.innerText = currentDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+                renderDayView(activeIds, currentDate);
+            }
+        }
+
+        function tasksForDate(activeIds, date) {
+            const key = dateKey(date);
+            return tasks.filter(t => t.date === key && activeIds.includes(t.classId) && !t.completed);
+        }
+
+        function selectDateForTask(date) {
+            taskDateInput.value = dateKey(date);
+        }
+
+        function renderMonthView(activeIds) {
+            const grid = document.createElement('div');
+            grid.className = 'calendar-grid';
+
+            ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].forEach(d => {
+                const el = document.createElement('div');
+                el.className = 'day-name';
+                el.innerText = d;
+                grid.appendChild(el);
+            });
+
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const startWeekday = new Date(year, month, 1).getDay();
+            const prevMonthDays = new Date(year, month, 0).getDate();
+
+            for (let i = startWeekday - 1; i >= 0; i--) {
+                grid.appendChild(makeDayCell(new Date(year, month - 1, prevMonthDays - i), activeIds, true));
+            }
+            for (let day = 1; day <= daysInMonth; day++) {
+                grid.appendChild(makeDayCell(new Date(year, month, day), activeIds, false));
+            }
+            const totalCells = startWeekday + daysInMonth;
+            const trailing = (7 - (totalCells % 7)) % 7;
+            for (let i = 1; i <= trailing; i++) {
+                grid.appendChild(makeDayCell(new Date(year, month + 1, i), activeIds, true));
+            }
+
+            calBodyEl.appendChild(grid);
+        }
+
+        function makeDayCell(date, activeIds, otherMonth) {
+            const cell = document.createElement('div');
+            cell.className = 'day-cell' + (otherMonth ? ' other-month' : '') + (isToday(date) ? ' is-today' : '');
+            cell.addEventListener('click', () => selectDateForTask(date));
+
+            const num = document.createElement('div');
+            num.className = 'day-number';
+            num.innerText = date.getDate();
+            cell.appendChild(num);
+
+            tasksForDate(activeIds, date).forEach(task => {
+                const cls = classes.find(c => c.id === task.classId);
+                const typeInfo = TASK_TYPES[task.type] || TASK_TYPES.other;
+                const evt = document.createElement('div');
+                evt.className = 'cal-event';
+                evt.style.backgroundColor = cls ? cls.color : '#ccc';
+                evt.innerText = `${typeInfo.icon} ${task.text}`;
+                cell.appendChild(evt);
+            });
+
+            return cell;
+        }
+
+        function renderWeekView(activeIds, start) {
+            const grid = document.createElement('div');
+            grid.className = 'week-grid';
+
+            for (let i = 0; i < 7; i++) {
+                const date = addDays(start, i);
+                const todayFlag = isToday(date);
+
+                const col = document.createElement('div');
+                col.className = 'week-day-col';
+
+                const header = document.createElement('div');
+                header.className = 'week-day-header' + (todayFlag ? ' is-today' : '');
+                header.innerHTML = `<div class="wd-name">${date.toLocaleDateString('en-US', { weekday: 'short' })}</div><div class="wd-num">${date.getDate()}</div>`;
+                col.appendChild(header);
+
+                const body = document.createElement('div');
+                body.className = 'week-day-body' + (todayFlag ? ' is-today' : '');
+                body.addEventListener('click', () => selectDateForTask(date));
+
+                tasksForDate(activeIds, date).forEach(task => {
+                    const cls = classes.find(c => c.id === task.classId);
+                    const typeInfo = TASK_TYPES[task.type] || TASK_TYPES.other;
+                    const evt = document.createElement('div');
+                    evt.className = 'cal-event';
+                    evt.style.backgroundColor = cls ? cls.color : '#ccc';
+                    evt.innerText = `${typeInfo.icon} ${task.text}`;
+                    body.appendChild(evt);
+                });
+
+                col.appendChild(body);
+                grid.appendChild(col);
+            }
+
+            calBodyEl.appendChild(grid);
+        }
+
+        function renderDayView(activeIds, date) {
+            const wrap = document.createElement('div');
+            wrap.className = 'day-view';
+
+            const todayFlag = isToday(date);
+            const header = document.createElement('div');
+            header.className = 'day-view-header' + (todayFlag ? ' is-today' : '');
+            header.innerHTML = `<span>${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>` +
+                (todayFlag ? '<span class="day-view-today-pill">Today</span>' : '');
+            header.addEventListener('click', () => selectDateForTask(date));
+            wrap.appendChild(header);
+
+            const list = document.createElement('div');
+            list.className = 'day-view-list';
+
+            const dayTasks = tasksForDate(activeIds, date);
+            if (dayTasks.length === 0) {
+                list.innerHTML = '<div class="day-view-empty">No tasks on this day</div>';
+            } else {
+                dayTasks.forEach(task => {
+                    const cls = classes.find(c => c.id === task.classId);
+                    const typeInfo = TASK_TYPES[task.type] || TASK_TYPES.other;
+                    const evt = document.createElement('div');
+                    evt.className = 'day-view-event';
+                    evt.style.backgroundColor = cls ? cls.color : '#ccc';
+                    evt.innerText = `${typeInfo.icon} ${task.text}`;
+                    list.appendChild(evt);
+                });
+            }
+            wrap.appendChild(list);
+            calBodyEl.appendChild(wrap);
+        }
+
+        // --- CALENDAR NAVIGATION ---
+        function navigateCalendar(dir) {
+            if (currentView === 'month') currentDate = addMonths(currentDate, dir);
+            else if (currentView === 'week') currentDate = addDays(currentDate, dir * 7);
+            else currentDate = addDays(currentDate, dir);
+            renderCalendar();
+        }
+
+        calPrevBtn.addEventListener('click', () => navigateCalendar(-1));
+        calNextBtn.addEventListener('click', () => navigateCalendar(1));
+        calTodayBtn.addEventListener('click', () => {
+            currentDate = new Date();
+            currentDate.setHours(0, 0, 0, 0);
+            renderCalendar();
+        });
+
+        viewButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentView = btn.dataset.view;
+                viewButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderCalendar();
+            });
+        });
+
+        // --- ACTIONS ---
+        classForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = classInput.value.trim();
+            if (name) {
+                const id = 'cls_' + Date.now();
+                const color = colors[classes.length % colors.length];
+                classes.push({ id, name, color, activeOnMaster: true });
+                saveData();
+                renderSidebar();
+                classInput.value = '';
+
+                // If on master, re-render to update dropdown
+                if (currentTab === 'master') switchTab('master');
+            }
+        });
+
+        function deleteClass(id, event) {
+            event.stopPropagation();
+            if (confirm('Delete this class and all its tasks?')) {
+                classes = classes.filter(c => c.id !== id);
+                tasks = tasks.filter(t => t.classId !== id);
+                saveData();
+                if (currentTab === id) switchTab('master');
+                else { renderSidebar(); renderDashboard(); }
+            }
+        }
+
+        function toggleMasterClass(index) {
+            classes[index].activeOnMaster = !classes[index].activeOnMaster;
+            saveData();
+            if (currentTab === 'master') renderDashboard();
+        }
+
+        taskForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const text = taskInput.value.trim();
+            const date = taskDateInput.value;
+            const type = taskTypeSelect.value;
+            const classId = currentTab === 'master' ? taskClassSelect.value : currentTab;
+
+            if (text && classId && date) {
+                tasks.push({
+                    id: Date.now(),
+                    text,
+                    classId,
+                    date,
+                    type,
+                    completed: false,
+                    notes: []
+                });
+                saveData();
+                renderDashboard();
+                taskInput.value = '';
+                taskDateInput.value = '';
+            }
+        });
+
+        function findTaskItemEl(id) {
+            return Array.from(document.querySelectorAll('.todo-item'))
+                .find(el => el.dataset.taskId === String(id));
+        }
+
+        function focusNoteInput(id) {
+            const itemEl = findTaskItemEl(id);
+            const input = itemEl ? itemEl.querySelector('.note-form input[type="text"]') : null;
+            if (input) input.focus();
+        }
+
+        function toggleTask(id) {
+            const task = tasks.find(t => t.id === id);
+            if (task) {
+                task.completed = !task.completed;
+                saveData();
+                renderDashboard();
+            }
+        }
+
+        function toggleNotes(id) {
+            if (expandedTaskIds.has(id)) {
+                expandedTaskIds.delete(id);
+            } else {
+                expandedTaskIds.add(id);
+            }
+            renderTasks();
+            if (expandedTaskIds.has(id)) focusNoteInput(id);
+        }
+
+        function addNote(id, text) {
+            text = (text || '').trim();
+            if (!text) return;
+
+            const task = tasks.find(t => t.id === id);
+            if (!task) return;
+            if (!task.notes) task.notes = [];
+            task.notes.push(text);
+            saveData();
+
+            expandedTaskIds.add(id);
+            renderTasks();
+            focusNoteInput(id);
+        }
+
+        function deleteNote(id, idx) {
+            const task = tasks.find(t => t.id === id);
+            if (!task || !task.notes) return;
+            task.notes.splice(idx, 1);
+            saveData();
+            renderTasks();
+        }
+
+        function deleteTask(id) {
+            tasks = tasks.filter(t => t.id !== id);
+            saveData();
+            renderDashboard();
+        }
+
+        // Run on load
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
